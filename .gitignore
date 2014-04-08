@@ -1,0 +1,9 @@
+xml.tab.c
+lex.xml.c
+xml.tab.h
+xml.output
+xmltool
+xmltool.*
+commun
+Tests/**/temp*
+Tests/results.csv
