@@ -1,6 +1,7 @@
 #include "commun.h"
 #include <iostream>
 #include <cstring>
+#include <fstream>
 
 using namespace std;
 
@@ -19,7 +20,22 @@ bool cmdOptionExists(char** begin, char** end, const string& option)
     return find(begin, end, option) != end;
 }
 
-int xmlparse(void);
+int xmlParse(char * filename)
+{
+    ifstream xml;
+    xml.open(filename);
+
+    if (xml.is_open())
+    {
+        string line;
+        while (getline(xml, line))
+        {
+            cout<<line<<endl;
+        }
+    }
+
+    return 0;
+}
 
 int main(int argc, char * argv[])
 {
@@ -35,13 +51,22 @@ int main(int argc, char * argv[])
     else if (cmdOptionExists(argv, argv+argc, "-p"))
     {
         char * filename = getCmdOption(argv, argv + argc, "-p");
-        cerr << "You must provide an argument to the command -p" << endl;
-
+        if (filename == NULL)
+        {
+            cerr << "You must provide an argument to the command -p" << endl;
+        }
+        else
+        {
+            return xmlParse(filename);
+        }
     }
     else if (cmdOptionExists(argv, argv+argc, "-t"))
     {
         char * filename = getCmdOption(argv, argv + argc, "-t");
-        cerr << "You must provide two arguments to the command -t: an xml file and an xsl file" << endl;
+        if (filename == NULL)
+        {
+            cerr << "You must provide two arguments to the command -t: an xml file and an xsl file" << endl;
+        }
 
     }
     else
