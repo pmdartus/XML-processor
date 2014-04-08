@@ -73,8 +73,8 @@ atts
  ;
 
 lpi
- : lpi INFSPECIAL NOM atts SUPSPECIAL
- | /* vide */
+ : lpi INFSPECIAL NOM atts SUPSPECIAL		{ $$ = $1; $$ -> push_back(new Pi($3, $4)); }
+ | /* vide */														{ $$ = new list <pi *>(); }
  ;
 
 content
