@@ -21,10 +21,26 @@ void xmlerror(const char * msg)
 
 %union {
    char * s;
+   // Perso
+   Item* i;
+   list<Attribut *>* la;
+   list<Pi *>* lp;
+   list<Item*> *c;
 }
 
 %token EGAL SLASH SUP SUPSPECIAL DOCTYPE COLON INFSPECIAL INF CDATABEGIN
 %token <s> VALEUR DONNEES COMMENT NOM CDATAEND
+// Perso
+%type <i> element; /* Element is an item because it can contain content ;) */
+%type <i> item;
+%type <la> atts;
+%type <lp> lpi;
+%type <c> content;
+
+%parseparam {
+	Document **d
+	Doctypedecl * doctypecl;
+} // retour du parseur
 
 %%
 
@@ -37,6 +53,7 @@ suiteprolog
  | /* vide */
  ;
 
+/* doctypecl param du parseur parsparam -> pointeur null qui sera affecté */
 doctypecl
  : DOCTYPE NAME NAME VALEUR
  | DOCTYPE NAME NAME VALEUR VALEUR
@@ -72,3 +89,5 @@ item
  | COMMENT
  | DONNEES
  ;
+
+%%
