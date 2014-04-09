@@ -1,4 +1,5 @@
 #include "commun.h"
+#include <unistd.h>
 #include <iostream>
 #include <cstring>
 #include <vector>
@@ -26,20 +27,22 @@ bool cmdHelp(bool argumentsFound = true) {
     return 1;
 }
 
+bool isFileReadable(char* filename)
+{
+    bool readable = access( filename, R_OK ) != -1;
+    if (!readable)
+    {
+       cerr << "Unable to open file " <<filename<< endl;
+    }
+
+    return readable;
+}
+
 int xmlParse(char* filename)
 {
-    ifstream xml;
-    xml.open(filename);
-
-    if (xml.is_open())
+    if(!isFileReadable(filename))
     {
-        string line;
-        while (getline(xml, line))
-        {
-            cout<<line<<endl;
-        }
-
-        return 0;
+        return 1;
     }
 
     return 1;
@@ -47,11 +50,21 @@ int xmlParse(char* filename)
 
 int xmlTransform(char* xmlFileName, char* xslFileName)
 {
+    if(!isFileReadable(xmlFileName) || !isFileReadable(xslFileName))
+    {
+        return 1;
+    }
+
     return 1;
 }
 
 int xmlValidate(char* xmlFileName, char* xsdFileName)
 {
+    if(!isFileReadable(xmlFileName) || !isFileReadable(xsdFileName))
+    {
+        return 1;
+    }
+
     return 1;
 }
 
@@ -80,6 +93,7 @@ int main(int argc, char* argv[])
         {
             char* xmlFileName = argv[2];
             char* xslFileName = argv[3];
+            return xmlTransform(xmlFileName, xslFileName);
         }
 
     }
@@ -93,6 +107,7 @@ int main(int argc, char* argv[])
         {
             char* xmlFileName = argv[2];
             char* xsdFileName = argv[3];
+            return xmlValidate(xmlFileName, xsdFileName);
         }
 
     }
