@@ -1,14 +1,13 @@
-/* A Bison parser, made by GNU Bison 2.3.  */
+/* A Bison parser, made by GNU Bison 3.0.  */
 
-/* Skeleton interface for Bison's Yacc-like parsers in C
+/* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
-   Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
 
-   This program is free software; you can redistribute it and/or modify
+   This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2, or (at your option)
-   any later version.
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,9 +15,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.  */
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -33,66 +30,63 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Tokens.  */
+#ifndef YY_XML_XML_TAB_H_INCLUDED
+# define YY_XML_XML_TAB_H_INCLUDED
+/* Debug traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 1
+#endif
+#if YYDEBUG
+extern int xmldebug;
+#endif
+
+/* Token type.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-   /* Put the tokens into the symbol table, so that GDB and other debuggers
-      know about them.  */
-   enum yytokentype {
-     EGAL = 258,
-     SLASH = 259,
-     SUP = 260,
-     SUPSPECIAL = 261,
-     DOCTYPE = 262,
-     COLON = 263,
-     INFSPECIAL = 264,
-     INF = 265,
-     CDATABEGIN = 266,
-     VALEUR = 267,
-     DONNEES = 268,
-     COMMENT = 269,
-     NOM = 270,
-     CDATAEND = 271
-   };
+  enum yytokentype
+  {
+    EGAL = 258,
+    SLASH = 259,
+    SUP = 260,
+    SUPSPECIAL = 261,
+    DOCTYPE = 262,
+    COLON = 263,
+    INFSPECIAL = 264,
+    INF = 265,
+    CDATABEGIN = 266,
+    VALEUR = 267,
+    DONNEES = 268,
+    COMMENT = 269,
+    NOM = 270,
+    CDATAEND = 271
+  };
 #endif
-/* Tokens.  */
-#define EGAL 258
-#define SLASH 259
-#define SUP 260
-#define SUPSPECIAL 261
-#define DOCTYPE 262
-#define COLON 263
-#define INFSPECIAL 264
-#define INF 265
-#define CDATABEGIN 266
-#define VALEUR 267
-#define DONNEES 268
-#define COMMENT 269
-#define NOM 270
-#define CDATAEND 271
 
-
-
-
+/* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE
-#line 22 "xml.y"
+typedef union YYSTYPE YYSTYPE;
+union YYSTYPE
 {
+#line 32 "xml.y" /* yacc.c:1915  */
+
    char * s;
    // Perso
    Item* i;
    Doctypedecl* doc;
-   list<Attribut *>* la;
+   list<Atts *>* la;
    list<Pi *>* lp;
    list<Item*> *c;
-}
-/* Line 1529 of yacc.c.  */
-#line 91 "xml.tab.h"
-	YYSTYPE;
-# define yystype YYSTYPE /* obsolescent; will be withdrawn */
-# define YYSTYPE_IS_DECLARED 1
+
+#line 81 "xml.tab.h" /* yacc.c:1915  */
+};
 # define YYSTYPE_IS_TRIVIAL 1
+# define YYSTYPE_IS_DECLARED 1
 #endif
+
 
 extern YYSTYPE xmllval;
 
+int xmlparse (Document **d,
+	Doctypedecl ** dt);
+
+#endif /* !YY_XML_XML_TAB_H_INCLUDED  */

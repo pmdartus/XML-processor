@@ -7,10 +7,20 @@
 #include <cstdlib>
 using namespace std;
 #include "commun.h"
+#include "item.h"
+#include "atts.h"
+#include "cdata.h"
+#include "content.h"
+#include "doctypedecl.h"
+#include "document.h"
+#include "element.h"
+#include "emptytag.h"
+#include "tag.h"
+#include "pi.h"
 
 extern char xmltext[];
 
-int xmllex(void);  
+int xmllex(void);
 
 void xmlerror(const char * msg)
 {
@@ -24,7 +34,7 @@ void xmlerror(const char * msg)
    // Perso
    Item* i;
    Doctypedecl* doc;
-   list<Attribut *>* la;
+   list<Atts *>* la;
    list<Pi *>* lp;
    list<Item*> *c;
 }
@@ -74,8 +84,8 @@ element
  ;
 
 atts
- : atts NOM EGAL VALEUR      { $$ = $1; $$ -> push_back(new Attribut($2, $4)); }
- | /* vide */                { $$ = new list <Attribut *>(); }
+ : atts NOM EGAL VALEUR      { $$ = $1; $$ -> push_back(new Atts($2, $4)); }
+ | /* vide */                { $$ = new list <Atts *>(); }
  ;
 
 lpi
@@ -90,7 +100,7 @@ content
 
 item
  : element                                   { $$ = $1; }
- | CDATABEGIN CDATAEND /* cdsect */          { $$ = new Cdata($2); }
+ | CDATABEGIN CDATAEND /* cdsect */          { $$ = new CData($2); }
  | INFSPECIAL NOM atts SUPSPECIAL /* pi */   { $$ = new Pi($2, $3); }
  | COMMENT                                   { $$ = 0; }
  | DONNEES                                   { $$ = new Content($1); }
