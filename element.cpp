@@ -4,7 +4,7 @@ Element::Element() {
 
 }
 
-Element::Element(char *name, list<Attribut *> atts) {
+Element::Element(char *name, vector<Atts *> atts) {
 	std::cout << "Element's constructor" << std::endl;
     this->name = name;
     this->attList = atts;

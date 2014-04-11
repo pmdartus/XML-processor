@@ -4,7 +4,7 @@ Pi::Pi(){
     
 }
 
-Pi::Pi(char *name, list<Attribut *> atts) {
+Pi::Pi(char *name, vector<Atts *> atts) {
 	std::cout << "Pi's constructor" << std::endl;
 }
 

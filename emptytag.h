@@ -9,7 +9,7 @@ private:
 
 public:
     EmptyTag();
-    EmptyTag(char *name, vector<Attribut *> atts);
+    EmptyTag(char *name, vector<Atts *> atts);
     ~EmptyTag();
 };
 
