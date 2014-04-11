@@ -1,7 +1,13 @@
 #include "element.h"
 
 Element::Element() {
-    
+
+}
+
+Element::Element(char *name, list<Attribut *> atts) {
+	std::cout << "Element's constructor" << std::endl;
+    this->name = name;
+    this->attList = atts;
 }
 
 Element::~Element() {

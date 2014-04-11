@@ -9,6 +9,7 @@ private:
     
 public:
     EmptyTag();
+    EmptyTag(char *name, list<Attribut *> atts);
     ~EmptyTag();
 };
 

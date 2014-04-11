@@ -9,6 +9,7 @@ private:
     
 public:
     Pi();
+    Pi(char *name, list<Attribut *> atts);
     ~Pi();
     
 };

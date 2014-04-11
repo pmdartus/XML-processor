@@ -16,6 +16,7 @@ private:
     vector<Atts*> attList;
 public:
     Element();
+    Element(char *name, list<Attribut *> atts);
     ~Element();
     const string getName() const;
     vector<Atts*> getAtts() const;
