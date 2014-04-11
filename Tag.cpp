@@ -1,4 +1,5 @@
 #include "tag.h"
+#include <iostream>
 
 
 Tag::Tag() {
