@@ -6,9 +6,15 @@
 class Doctypedecl {
 
 private:
-    
+    char * root_element;
+    char * external_id;
+    char * dtd_name;
+    char * dtd_location;
+
 public:
-    Doctypedecl();
+    Doctypedecl(char * root_element);
+    Doctypedecl(char * root_element, char * external_id, char * dtd_name);
+    Doctypedecl(char * root_element, char * external_id, char * dtd_name, char * dtd_location);
     ~Doctypedecl();
 
 };
