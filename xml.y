@@ -67,7 +67,6 @@ suiteprolog
  ;
 
 /* doctypecl param du parseur parsparam -> pointeur null qui sera affecté */
-/* QUESTION : on peut mettre le *dt dans push back? */
 doctypecl
  : DOCTYPE NOM NOM VALEUR         { *dt = new Doctypedecl($2, $3, $4); }
  | DOCTYPE NOM NOM VALEUR VALEUR  { *dt = new Doctypedecl($2, $3, $4, $5); }
