@@ -3,8 +3,6 @@
 
 class tag;
 
-using namespace std;
-
 class Item 
 {
 

@@ -6,6 +6,8 @@
 #include "tag.h"
 #include <vector>
 
+using namespace std;
+
 class Document {
 
 private:

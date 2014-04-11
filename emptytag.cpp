@@ -1,4 +1,5 @@
 #include "emptytag.h"
+#include <iostream>
 
 
 EmptyTag::EmptyTag() {

@@ -1,4 +1,5 @@
 #include "pi.h"
+#include <iostream>
 
 Pi::Pi(){
     
