@@ -9,15 +9,15 @@ using namespace std;
 
 class Tag : public Element
 {
-    
+
 private:
     vector<Item*> children;
-    
+
 public:
     Tag();
-    Tag(char *name, list<Attribut *> atts);
+    Tag(char *name, vector<Atts *> atts);
     ~Tag();
-    
+
 };
 
 #endif

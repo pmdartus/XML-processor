@@ -4,12 +4,12 @@
 #include "element.h"
 
 class EmptyTag : public Element {
-    
+
 private:
-    
+
 public:
     EmptyTag();
-    EmptyTag(char *name, list<Attribut *> atts);
+    EmptyTag(char *name, vector<Attribut *> atts);
     ~EmptyTag();
 };
 

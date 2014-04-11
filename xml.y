@@ -1,7 +1,7 @@
 %{
 
 #include <stack>
-#include <list>
+#include <vector>
 #include <cstring>
 #include <cstdio>
 #include <cstdlib>
@@ -34,9 +34,9 @@ void xmlerror(const char * msg)
    // Perso
    Item* i;
    Doctypedecl* doc;
-   list<Atts *>* la;
-   list<Pi *>* lp;
-   list<Item*> *c;
+   vector<Atts *>* la;
+   vector<Pi *>* lp;
+   vector<Item*> *c;
 }
 
 %token EGAL SLASH SUP SUPSPECIAL DOCTYPE COLON INFSPECIAL INF CDATABEGIN
@@ -84,17 +84,17 @@ element
 
 atts
  : atts NOM EGAL VALEUR      { $$ = $1; $$ -> push_back(new Atts($2, $4)); }
- | /* vide */                { $$ = new list <Atts *>(); }
+ | /* vide */                { $$ = new vector <Atts *>(); }
  ;
 
 lpi
  : lpi INFSPECIAL NOM atts SUPSPECIAL		{ $$ = $1; $$ -> push_back(new Pi($3, $4)); }
- | /* vide */										{ $$ = new list <Pi *>(); }
+ | /* vide */										{ $$ = new vector <Pi *>(); }
  ;
 
 content
  : content item         { $$ = $1; if($2) { $$ -> push_back($2); } }
- | /* vide */           { $$ = new list <Item *>(); }
+ | /* vide */           { $$ = new vector <Item *>(); }
  ;
 
 item

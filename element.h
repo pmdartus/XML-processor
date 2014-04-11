@@ -10,17 +10,17 @@ using namespace std;
 
 class Element : public Item
 {
-    
+
 private:
     string name;
     vector<Atts*> attList;
 public:
     Element();
-    Element(char *name, list<Attribut *> atts);
+    Element(char *name, vector<Atts *> atts);
     ~Element();
     const string getName() const;
     vector<Atts*> getAtts() const;
-    
+
 };
 
 #endif

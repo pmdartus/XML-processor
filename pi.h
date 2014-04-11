@@ -6,12 +6,12 @@
 class Pi : public Element {
 
 private:
-    
+
 public:
     Pi();
-    Pi(char *name, list<Attribut *> atts);
+    Pi(char *name, vector<Atts *> atts);
     ~Pi();
-    
+
 };
 
 #endif
