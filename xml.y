@@ -23,6 +23,7 @@ void xmlerror(const char * msg)
    char * s;
    // Perso
    Item* i;
+   Doctypedecl* doc;
    list<Attribut *>* la;
    list<Pi *>* lp;
    list<Item*> *c;
@@ -37,6 +38,7 @@ void xmlerror(const char * msg)
 %type <lp> lpi
 %type <lp> suiteprolog
 %type <c> content
+%type <doc> doctypecl
 
 %parse-param {
 	Document **d,
@@ -51,14 +53,14 @@ document
 
 suiteprolog
  : doctypecl lpi                    { $$ = $2; }
- | /* vide */
+ | /* vide */                       { $$ = 0; }
  ;
 
 /* doctypecl param du parseur parsparam -> pointeur null qui sera affecté */
 /* QUESTION : on peut mettre le *dt dans push back? */
 doctypecl
- : DOCTYPE NAME NAME VALEUR         { *dt = new Doctypedecl($2, $3, $4); }
- | DOCTYPE NAME NAME VALEUR VALEUR  { *dt = new Doctypedecl($2, $3, $4, $5); }
+ : DOCTYPE NOM NOM VALEUR         { *dt = new Doctypedecl($2, $3, $4); }
+ | DOCTYPE NOM NOM VALEUR VALEUR  { *dt = new Doctypedecl($2, $3, $4, $5); }
  ;
 
 element
@@ -87,7 +89,7 @@ content
  ;
 
 item
- : Element
+ : element                                   { $$ = $1; }
  | CDATABEGIN CDATAEND /* cdsect */          { $$ = new Cdata($2); }
  | INFSPECIAL NOM atts SUPSPECIAL /* pi */   { $$ = new Pi($2, $3); }
  | COMMENT                                   { $$ = 0; }
