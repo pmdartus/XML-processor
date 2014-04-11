@@ -7,12 +7,11 @@ class Item
 {
 
 private:
-	Item* parent;
 	
 public:
     Item();
     ~Item();
-    const Item* getParent() const;
+	Item* parent;
 };
 
 #endif
