@@ -15,7 +15,7 @@ private:
     
 public:
     Tag();
-    Tag(char *name, list<Attribut *> atts);
+    Tag(char *name, vector<Atts *> atts);
     ~Tag();
     
 };

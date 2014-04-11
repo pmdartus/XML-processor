@@ -5,7 +5,7 @@ EmptyTag::EmptyTag() {
     
 }
 
-EmptyTag::EmptyTag(char *name, list<Attribut *> atts) {
+EmptyTag::EmptyTag(char *name, vector<Atts *> atts) {
 	std::cout << "EmptyTag's constructor" << std::endl;
 }
 
