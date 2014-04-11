@@ -77,10 +77,10 @@ element
  : INF NOM atts SLASH SUP /* emptytag */ { $$ = new Emptyelemtag($2, $3); }
  | INF NOM atts SUP
    content
-   INF SLASH NOM SUP /* tag */           { $$ = new Tag($2, $3); }
+   INF SLASH NOM SUP /* tag */           { $$ = new Tag($2, $3, $5); }
  | INF NOM COLON NOM atts SUP
    content
-   INF SLASH NOM COLON NOM SUP /* tag avec espace de nom */ { $$ = new Tag(string($2)+":"+string($4), $5); }
+   INF SLASH NOM COLON NOM SUP /* tag avec espace de nom */ { $$ = new Tag(string($2)+":"+string($4), $5, $7); }
  ;
 
 atts

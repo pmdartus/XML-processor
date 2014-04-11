@@ -8,6 +8,6 @@ Item::~Item() {
     
 }
 
-const Item* Item::getParent() const {
-    return Item::parent;
-}
+// const Item* Item::getParent() const {
+//     return Item::parent;
+// }
