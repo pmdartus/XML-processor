@@ -9,16 +9,15 @@
 class Document {
 
 private:
-    Doctypedecl* doctype;
-    vector<Pi *> prologs;
-    vector<Pi *> doctypes;
-    vector<Pi *> elements;
+    vector<Pi *> misc_prolog;
+    vector<Pi *> misc_doctype;
     Tag * root;
+    vector<Pi *> misc_element;
     
 public:
-    Document();
+    Document(vector<Pi *> misc_prolog, vector<Pi *> misc_doctype, Tag * root, vector<Pi *> misc_element);
     ~Document();
-    
+    Tag getRoot();
 };
 
 #endif
