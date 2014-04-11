@@ -10,7 +10,7 @@ Tag::Tag(char *name, vector<Atts *> atts, vector<Item *> children) {
 	this->children = children;
 
 	// Set the parent of every child
-	for (std::vector<int>::iterator it = myvector.begin() ; it != myvector.end(); ++it) {
+	for (std::vector<Item *>::iterator it = myvector.begin() ; it != myvector.end(); ++it) {
 		it->parent = this;
 		std::cout << "  > " << it.name << " = " << this.name << std::endl;
 	}
