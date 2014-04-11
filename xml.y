@@ -21,23 +21,79 @@ void xmlerror(const char * msg)
 
 %union {
    char * s;
+   // Perso
+   Item* i;
+   Doctypedecl* doc;
+   list<Attribut *>* la;
+   list<Pi *>* lp;
+   list<Item*> *c;
 }
 
 %token EGAL SLASH SUP SUPSPECIAL DOCTYPE COLON INFSPECIAL INF CDATABEGIN
 %token <s> VALEUR DONNEES COMMENT NOM CDATAEND
+// Perso
+%type <i> element /* Element is an item because it can contain content ;) */
+%type <i> item
+%type <la> atts
+%type <lp> lpi
+%type <lp> suiteprolog
+%type <c> content
+%type <doc> doctypecl
+
+%parse-param {
+	Document **d,
+	Doctypedecl ** dt
+} // retour du parseur
 
 %%
 
 document
- : element 
+ : lpi suiteprolog element lpi      { *d = new Document($1, $2, $3, $4); }
+ ;
+
+suiteprolog
+ : doctypecl lpi                    { $$ = $2; }
+ | /* vide */                       { $$ = 0; }
+ ;
+
+/* doctypecl param du parseur parsparam -> pointeur null qui sera affecté */
+/* QUESTION : on peut mettre le *dt dans push back? */
+doctypecl
+ : DOCTYPE NOM NOM VALEUR         { *dt = new Doctypedecl($2, $3, $4); }
+ | DOCTYPE NOM NOM VALEUR VALEUR  { *dt = new Doctypedecl($2, $3, $4, $5); }
  ;
 
 element
- : INF NOM SUP content
-   INF SLASH NOM SUP               
+ : INF NOM atts SLASH SUP /* emptytag */ { $$ = new Element($2, $3); }
+ | INF NOM atts SUP
+   content
+   INF SLASH NOM SUP /* tag */           { $$ = new Element($2, $3); }
+ | INF NOM COLON NOM atts SUP
+   content
+   INF SLASH NOM COLON NOM SUP /* tag avec espace de nom */ { $$ = new Element(string($2)+":"+string($4), $5); }
+ ;
+
+atts
+ : atts NOM EGAL VALEUR      { $$ = $1; $$ -> push_back(new Attribut($2, $4)); }
+ | /* vide */                { $$ = new list <Attribut *>(); }
+ ;
+
+lpi
+ : lpi INFSPECIAL NOM atts SUPSPECIAL		{ $$ = $1; $$ -> push_back(new Pi($3, $4)); }
+ | /* vide */										{ $$ = new list <Pi *>(); }
  ;
 
 content
- : content element          
- | /* vide */              
+ : content item         { $$ = $1; if($2) { $$ -> push_back($2); } }
+ | /* vide */           { $$ = new list <Item *>(); }
  ;
+
+item
+ : element                                   { $$ = $1; }
+ | CDATABEGIN CDATAEND /* cdsect */          { $$ = new Cdata($2); }
+ | INFSPECIAL NOM atts SUPSPECIAL /* pi */   { $$ = new Pi($2, $3); }
+ | COMMENT                                   { $$ = 0; }
+ | DONNEES                                   { $$ = new Content($1); }
+ ;
+
+%%
