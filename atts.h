@@ -1,12 +1,17 @@
-#ifndef ____Atts__
-#define ____Atts__
+#ifndef ATTS_H
+#define ATTS_H
+
+#include <string>
+
+using namespace std;
 
 class Atts {
   
 private:
     
 public:
-    Atts();
+    //TODO rename
+    Atts(string something, string somethingElse);
     ~Atts();
 };
 

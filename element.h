@@ -16,7 +16,8 @@ protected:
     vector<Atts*> attList;
 public:
     Element();
-    Element(char *name, vector<Atts *> atts);
+    Element(string name);
+    Element(string name, vector<Atts *> atts);
     ~Element();
     const string getName() const;
     vector<Atts*> getAtts() const;

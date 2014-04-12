@@ -13,7 +13,7 @@ private:
     string text;
     
 public:
-    Content();
+    Content(string text);
     ~Content();
     const string getText() const;
     

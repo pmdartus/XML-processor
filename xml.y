@@ -2,9 +2,10 @@
 
 #include <stack>
 #include <vector>
-#include <cstring>
+#include <string>
 #include <cstdio>
 #include <cstdlib>
+
 using namespace std;
 #include "commun.h"
 #include "item.h"
@@ -22,7 +23,7 @@ extern char xmltext[];
 
 int xmllex(void);
 
-void xmlerror(const char * msg)
+void xmlerror(const char *msg)
 {
    fprintf(stderr,"%s\n",msg);
 }
@@ -30,13 +31,13 @@ void xmlerror(const char * msg)
 %}
 
 %union {
-   char * s;
+   char *s;
    // Perso
-   Item* i;
-   Doctypedecl* doc;
-   vector<Atts *>* la;
-   vector<Pi *>* lp;
-   vector<Item*> *c;
+   Item *i;
+   Doctypedecl *doc;
+   vector<Atts *> *la;
+   vector<Pi *> *lp;
+   vector<Item *> *c;
 }
 
 %token EGAL SLASH SUP SUPSPECIAL DOCTYPE COLON INFSPECIAL INF CDATABEGIN
@@ -51,12 +52,14 @@ void xmlerror(const char * msg)
 %type <doc> doctypecl
 
 %parse-param { Document **d }
-%parse-param { Doctypedecl ** dt } // retour du parseur
+%parse-param { Doctypedecl **dt } // retour du parseur
 
 %%
 
+// Document :: $1 => vector<Pi *> * | $2 => vector<Pi *> * | $3 => Item * | $4 => vector<Pi *> *
+// Dereferencing the pointer to fit the constructor
 document
- : lpi suiteprolog element lpi      { *d = new Document($1, $2, $3, $4); }
+ : lpi suiteprolog element lpi      { *d = new Document(*$1, *$2, $3, *$4); }
  ;
 
 suiteprolog
@@ -70,24 +73,28 @@ doctypecl
  | DOCTYPE NOM NOM VALEUR           { *dt = new Doctypedecl($2, $3, $4); }
  | DOCTYPE NOM NOM VALEUR VALEUR    { *dt = new Doctypedecl($2, $3, $4, $5); }
  ;
-
+ 
+// EmptyTag :: $1 => char * | $2 => vector<Atts *> * 
+// Tag :: $2 => char * | $3 => vector<Atts *> * | $5 => vector<Item *> *
 element
- : INF NOM atts SLASH SUP /* emptytag */ { $$ = new Emptyelemtag($2, $3); }
+ : INF NOM atts SLASH SUP /* emptytag */ { $$ = new EmptyTag(string($2), *$3); }
  | INF NOM atts SUP
    content
-   INF SLASH NOM SUP /* tag */           { $$ = new Tag($2, $3, $5); }
+   INF SLASH NOM SUP /* tag */           { $$ = new Tag(string($2), *$3, *$5); }
  | INF NOM COLON NOM atts SUP
    content
-   INF SLASH NOM COLON NOM SUP /* tag avec espace de nom */ { $$ = new Tag(string($2)+":"+string($4), $5, $7); }
+   INF SLASH NOM COLON NOM SUP /* tag avec espace de nom */ { $$ = new Tag(string($2) + ":" + string($4), *$5, *$7); }
  ;
 
+// Atts :: $2 => char * | $3 => char *
 atts
- : atts NOM EGAL VALEUR      { $$ = $1; $$ -> push_back(new Atts($2, $4)); }
+ : atts NOM EGAL VALEUR      { $$ = $1; $$ -> push_back(new Atts(string($2), string($4))); }
  | /* vide */                { $$ = new vector <Atts *>(); }
  ;
 
+// Pi :: $3 => char * | $4 => vector<Atts *> *
 lpi
- : lpi INFSPECIAL NOM atts SUPSPECIAL		{ $$ = $1; $$ -> push_back(new Pi($3, $4)); }
+ : lpi INFSPECIAL NOM atts SUPSPECIAL		{ $$ = $1; $$ -> push_back(new Pi(string($3), *$4)); }
  | /* vide */										{ $$ = new vector <Pi *>(); }
  ;
 
@@ -96,12 +103,15 @@ content
  | /* vide */           { $$ = new vector <Item *>(); }
  ;
 
+
+// Content :: $2 => char *
+// CData :: $2 => char *
 item
  : element                                   { $$ = $1; }
- | CDATABEGIN CDATAEND /* cdsect */          { $$ = new CData($2); }
- | INFSPECIAL NOM atts SUPSPECIAL /* pi */   { $$ = new Pi($2, $3); }
+ | CDATABEGIN CDATAEND /* cdsect */          { $$ = new CData(string($2)); }
+ | INFSPECIAL NOM atts SUPSPECIAL /* pi */   { $$ = new Pi(string($2), *$3); }
  | COMMENT                                   { $$ = 0; }
- | DONNEES                                   { $$ = new Content($1); }
+ | DONNEES                                   { $$ = new Content(string($1)); }
  ;
 
 %%

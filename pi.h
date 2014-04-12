@@ -2,6 +2,9 @@
 #define PI_H
 
 #include  "element.h"
+#include <string>
+
+using namespace std;
 
 class Pi : public Element {
 
@@ -9,7 +12,7 @@ private:
 
 public:
     Pi();
-    Pi(char *name, vector<Atts *> atts);
+    Pi(string name, vector<Atts *> atts);
     ~Pi();
 
 };

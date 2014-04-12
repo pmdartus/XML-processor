@@ -13,13 +13,13 @@ class Document {
 private:
     vector<Pi *> misc_prolog;
     vector<Pi *> misc_doctype;
-    Tag * root;
+    Item* root;
     vector<Pi *> misc_element;
     
 public:
-    Document(vector<Pi *> misc_prolog, vector<Pi *> misc_doctype, Tag * root, vector<Pi *> misc_element);
+    Document(vector<Pi *> misc_prolog, vector<Pi *> misc_doctype, Item *root, vector<Pi *> misc_element);
     ~Document();
-    Tag getRoot();
+    //const Item* getRoot() const;
 };
 
 #endif

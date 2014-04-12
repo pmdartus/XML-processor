@@ -5,11 +5,13 @@ Element::Element() {
 
 }
 
-Element::Element(char *name, vector<Atts *> atts) {
-    cout << "Element's constructor" << endl;
-    this->name = name;
-    this->attList = atts;
-    this->parent = 0;
+Element::Element(string name) {
+}
+
+Element::Element(string name, vector<Atts *> atts) {
+    Element::name = name;
+    Element::attList = atts;
+    Element::parent = 0;
 }
 
 Element::~Element() {

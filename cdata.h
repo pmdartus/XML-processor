@@ -2,6 +2,9 @@
 #define CDATA_H
 
 #include "content.h"
+#include <string>
+
+using namespace std;
 
 class CData : public Content {
     
@@ -9,7 +12,7 @@ private:
     
     
 public:
-    CData();
+    CData(string text);
     ~CData();
     
 };

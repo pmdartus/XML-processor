@@ -1,7 +1,7 @@
 #include "cdata.h"
 
-CData::CData() {
-    
+CData::CData(string text) : Content(text) {
+
 }
 
 CData::~CData() {
