@@ -4,6 +4,7 @@
 #include "element.h"
 #include "item.h"
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -15,7 +16,7 @@ private:
 
 public:
     Tag();
-    Tag(char *name, vector<Atts *> atts, vector<Item *> children);
+    Tag(string name, vector<Atts *> atts, vector<Item *> children);
     ~Tag();
 
 };
