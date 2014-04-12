@@ -17,12 +17,6 @@ Doctypedecl::Doctypedecl(char * root_element, char * external_id, char * dtd_nam
 	this->dtd_location = dtd_location;
 }
 
-
-
-Doctypedecl::Doctypedecl() {
-    
-}
-
 Doctypedecl::~Doctypedecl() {
-    
+
 }

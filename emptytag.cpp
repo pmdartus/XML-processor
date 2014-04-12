@@ -3,13 +3,13 @@
 
 
 EmptyTag::EmptyTag() {
-    
+
 }
 
 EmptyTag::EmptyTag(char *name, vector<Atts *> atts) {
-	std::cout << "EmptyTag's constructor" << std::endl;
+	cout << "EmptyTag's constructor" << endl;
 }
 
 EmptyTag::~EmptyTag() {
-    
+
 }

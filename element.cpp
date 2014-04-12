@@ -6,14 +6,14 @@ Element::Element() {
 }
 
 Element::Element(char *name, vector<Atts *> atts) {
-	std::cout << "Element's constructor" << std::endl;
+    cout << "Element's constructor" << endl;
     this->name = name;
     this->attList = atts;
     this->parent = 0;
 }
 
 Element::~Element() {
-    
+
 }
 
 const string Element::getName() const {
