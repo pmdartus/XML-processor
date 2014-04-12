@@ -11,7 +11,7 @@ using namespace std;
 class Element : public Item
 {
 
-private:
+protected:
     string name;
     vector<Atts*> attList;
 public:
