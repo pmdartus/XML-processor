@@ -23,7 +23,9 @@ extern char xmltext[];
 
 int xmllex(void);
 
-void xmlerror(const char *msg)
+void xmlerror(Document ** d,
+               Doctypedecl ** dt,
+               const char *msg)
 {
    fprintf(stderr,"%s\n",msg);
 }
@@ -118,7 +120,8 @@ item
 
 int main(void) {
    Document *d = 0;
-   yyparse(&d);
+   Doctypedecl *dt = 0;
+   xmlparse(&d, &dt);
    if (d) {
       cout<<"Mother fuckaaaaa"<<endl;
       delete d;
