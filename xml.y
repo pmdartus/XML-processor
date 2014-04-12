@@ -116,17 +116,12 @@ item
 
 %%
 
-void yyerror(Document ** d,
-            const char * msg) {
-   cout<<msg;
-}
-
 int main(void) {
    Document *d = 0;
-   yyparse(&e);
-   if (e) {
+   yyparse(&d);
+   if (d) {
       cout<<"Mother fuckaaaaa"<<endl;
-      delete e;
+      delete d;
    }
    return 0;
 }
