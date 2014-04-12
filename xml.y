@@ -50,10 +50,8 @@ void xmlerror(const char * msg)
 %type <c> content
 %type <doc> doctypecl
 
-%parse-param {
-	Document **d,
-	Doctypedecl ** dt
-} // retour du parseur
+%parse-param { Document **d }
+%parse-param { Doctypedecl ** dt } // retour du parseur
 
 %%
 
