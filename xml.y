@@ -115,16 +115,3 @@ item
  | COMMENT                                   { $$ = 0; }
  | DONNEES                                   { $$ = new Content(string($1)); }
  ;
-
-%%
-
-int main(void) {
-   Document *d = 0;
-   Doctypedecl *dt = 0;
-   xmlparse(&d, &dt);
-   if (d) {
-      cout<<"Mother fuckaaaaa"<<endl;
-      delete d;
-   }
-   return 0;
-}
