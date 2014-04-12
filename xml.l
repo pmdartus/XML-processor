@@ -6,6 +6,16 @@
 #include <string.h>
 #include <stdlib.h>
 #include "commun.h"
+#include "item.h"
+#include "atts.h"
+#include "cdata.h"
+#include "content.h"
+#include "doctypedecl.h"
+#include "document.h"
+#include "element.h"
+#include "emptytag.h"
+#include "tag.h"
+#include "pi.h"
 #include "xml.tab.h"
 
 #ifdef FLEXDEBUG
