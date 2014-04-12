@@ -1,17 +1,19 @@
 #include "tag.h"
 #include <iostream>
 
+
 Tag::Tag() {
 
 }
 
-Tag::Tag(string name, vector<Atts *> atts, vector<Item *> children) {
-	Tag::children = children;
+Tag::Tag(char *name, vector<Atts *> atts, vector<Item *> children) {
+	std::cout << "Tag's constructor" << std::endl;
+	this->children = children;
 
 	// Set the parent of every child
-	for (vector<Item *>::iterator it = children.begin() ; it != children.end(); ++it) {
-		(*it)->parent = this;
-		cout << "  > " << Tag::getName() << endl;
+	for (std::vector<Item *>::iterator it = myvector.begin() ; it != myvector.end(); ++it) {
+		it->parent = this;
+		std::cout << "  > " << it.name << " = " << this.name << std::endl;
 	}
 }
 
