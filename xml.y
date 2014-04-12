@@ -107,3 +107,18 @@ item
  ;
 
 %%
+
+void yyerror(Document ** d,
+            const char * msg) {
+   cout<<msg;
+}
+
+int main(void) {
+   Document *d = 0;
+   yyparse(&e);
+   if (e) {
+      cout<<"Mother fuckaaaaa"<<endl;
+      delete e;
+   }
+   return 0;
+}
