@@ -9,8 +9,6 @@ class Item
 private:
 	
 public:
-    Item();
-    ~Item();
 	Item* parent = 0;
     
     const Item * getParent() const;

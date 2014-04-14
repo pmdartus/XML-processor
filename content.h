@@ -2,11 +2,9 @@
 #define CONTENT_H
 
 #include "element.h"
-#include <string>
+#include "commun.h"
 
-using namespace std;
-
-class Content : public Element
+class Content : public Item
 {
     
 private:

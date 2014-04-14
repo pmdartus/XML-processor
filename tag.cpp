@@ -1,26 +1,18 @@
 #include "tag.h"
 
 Tag::Tag(string name, vector<Atts *> atts, vector<Item *> children) :
-    name(name),
-    atts(atts),
+    Element(name, atts),
     children(children) {
+        cout << "Tag's constructor" << endl;
         for(vector<Item *>::iterator it = children.begin(); it != children.end(); it++) {
             (*it)->setParent(this);
         }
 }
 
 Tag::~Tag() {
-    vector<Atts *>::iterator attsIt = atts.begin();
-    while (attsIt != atts.end()) {
-        attsIt = atts.erase(attsIt);
+    cout << "Tag's destructor" << endl;
+    vector<Item *>::iterator it = children.begin();
+    while (it != children.end()) {
+        it = children.erase(it);
     }
-
-    vector<Item *>::iterator childrenIt = children.begin();
-    while (childrenIt != children.end()) {
-        childrenIt = children.erase(childrenIt);
-    }
-}
-
-const string Tag::getName() const {
-    return name;
 }

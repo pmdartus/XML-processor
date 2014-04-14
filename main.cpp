@@ -1,4 +1,7 @@
 #include "commun.h"
+#include "document.h"
+#include "doctypedecl.h"
+
 #include <unistd.h>
 #include <iostream>
 #include <cstring>
@@ -7,6 +10,9 @@
 #include <fstream>
 
 using namespace std;
+
+extern FILE *xmlin;
+int xmlparse (Document **d, Doctypedecl **dt);
 
 bool cmdOptionExists(char** begin, char** end, const string& option)
 {
@@ -27,46 +33,44 @@ bool cmdHelp(bool argumentsFound = true) {
     return 1;
 }
 
-bool isFileReadable(char* filename)
+// Will exit the program when the file cannot be open
+void checkFileExistence(char* filename)
 {
-    bool readable = access( filename, R_OK ) != -1;
-    if (!readable)
-    {
-       cerr << "Unable to open file " <<filename<< endl;
-    }
 
-    return readable;
+    FILE *fid = fopen(filename, "r");
+    if (fid == NULL) {
+       cerr << "Unable to open file " <<filename<< endl;
+       exit(-1);
+    }
+    xmlin = fid;
 }
 
 int xmlParse(char* filename)
 {
-    if(!isFileReadable(filename))
-    {
-        return 1;
-    }
-
-    return 1;
+    checkFileExistence(filename);
+    Document *doc;
+    Doctypedecl *doctype;
+    return xmlparse(&doc, &doctype);
 }
 
-int xmlTransform(char* xmlFileName, char* xslFileName)
-{
-    if(!isFileReadable(xmlFileName) || !isFileReadable(xslFileName))
-    {
-        return 1;
-    }
+//int xmlTransform(char* xmlFileName, char* xslFileName)
+//{
+//    if(!isFileReadable(xmlFileName) || !isFileReadable(xslFileName))
+//    {
+//        return 1;
+//    }
+//
+//    return 1;
+//}
 
-    return 1;
-}
-
-int xmlValidate(char* xmlFileName, char* xsdFileName)
-{
-    if(!isFileReadable(xmlFileName) || !isFileReadable(xsdFileName))
-    {
-        return 1;
-    }
-
-    return 1;
-}
+//int xmlValidate(char* xmlFileName, char* xsdFileName)
+//{
+//    if(!isFileReadable(xmlFileName) || !isFileReadable(xsdFileName))
+//    {
+//        return 1;
+//    }
+//    return 1;
+//}
 
 int main(int argc, char* argv[])
 {
@@ -79,7 +83,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-            char* fileName = argv[2];
+            char *fileName = argv[2];
             return xmlParse(fileName);
         }
     }
@@ -91,9 +95,9 @@ int main(int argc, char* argv[])
         }
         else
         {
-            char* xmlFileName = argv[2];
-            char* xslFileName = argv[3];
-            return xmlTransform(xmlFileName, xslFileName);
+            char *xmlFileName = argv[2];
+            char *xslFileName = argv[3];
+//            return xmlTransform(xmlFileName, xslFileName);
         }
 
     }
@@ -105,9 +109,9 @@ int main(int argc, char* argv[])
         }
         else
         {
-            char* xmlFileName = argv[2];
-            char* xsdFileName = argv[3];
-            return xmlValidate(xmlFileName, xsdFileName);
+            char *xmlFileName = argv[2];
+            char *xsdFileName = argv[3];
+            //return xmlValidate(xmlFileName, xsdFileName);
         }
 
     }

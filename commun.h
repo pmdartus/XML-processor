@@ -2,6 +2,7 @@
 #define COMMUN_H
 
 #include <string>
+#include <iostream>
 using namespace std;
 
 //#define DEBUG

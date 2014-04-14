@@ -3,22 +3,19 @@
 
 #include "item.h"
 #include "atts.h"
-#include <string>
+#include "commun.h"
 #include <vector>
-
-using namespace std;
 
 class Element : public Item
 {
 
 protected:
     string name;
-    vector<Atts*> attList;
+    vector<Atts*> atts;
 public:
-    Element();
-    Element(string name);
     Element(string name, vector<Atts *> atts);
     ~Element();
+
     const string getName() const;
     vector<Atts*> getAtts() const;
 

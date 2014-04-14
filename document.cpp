@@ -4,7 +4,9 @@ Document::Document(vector<Pi *> misc_prolog, vector<Pi *> misc_doctype, Tag *roo
     misc_prolog(misc_prolog),
     misc_doctype(misc_doctype),
     root(root),
-    misc_element(misc_element) {}
+    misc_element(misc_element) {
+        cout << "Document's constructor" << endl;
+}
 
 Document::~Document() {
     vector<Pi *>::iterator it;

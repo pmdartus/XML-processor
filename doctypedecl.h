@@ -1,9 +1,7 @@
 #ifndef DOCTYPEDECL_H
 #define DOCTYPEDECL_H
 
-#include <string>
-
-using namespace std;
+#include "commun.h"
 
 class Doctypedecl {
     

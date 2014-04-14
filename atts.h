@@ -1,9 +1,7 @@
 #ifndef ATTS_H
 #define ATTS_H
 
-#include <string>
-
-using namespace std;
+#include "commun.h"
 
 struct Atts {
     
