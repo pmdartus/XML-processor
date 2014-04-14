@@ -3,7 +3,3 @@
 CData::CData(string text) : Content(text) {
 
 }
-
-CData::~CData() {
-    
-}

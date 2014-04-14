@@ -14,7 +14,6 @@ private:
     
 public:
     Content(string text);
-    ~Content();
     const string getText() const;
     
 };

@@ -17,7 +17,6 @@ public:
     Doctypedecl(string root_element);
     Doctypedecl(string root_element, string external_id, string dtd_name);
     Doctypedecl(string root_element, string external_id, string dtd_name, string dtd_location);
-    ~Doctypedecl();
 
 };
 
