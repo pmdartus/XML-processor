@@ -36,6 +36,9 @@ void xmlerror(Document ** d,
    char *s;
    // Perso
    Item *i;
+   Element *e;
+   EmptyTag *et;
+   Tag *t;
    Doctypedecl *doc;
    vector<Atts *> *la;
    vector<Pi *> *lp;
@@ -45,8 +48,10 @@ void xmlerror(Document ** d,
 %token EGAL SLASH SUP SUPSPECIAL DOCTYPE COLON INFSPECIAL INF CDATABEGIN
 %token <s> VALEUR DONNEES COMMENT NOM CDATAEND
 // Perso
-%type <i> element /* Element is an item because it can contain content ;) */
+%type <e> element /* Element is an item because it can contain content ;) */
 %type <i> item
+%type <et> emptytag
+%type <t> tag
 %type <la> atts
 %type <lp> lpi
 %type <lp> suiteprolog
@@ -61,7 +66,7 @@ void xmlerror(Document ** d,
 // Document :: $1 => vector<Pi *> * | $2 => vector<Pi *> * | $3 => Item * | $4 => vector<Pi *> *
 // Dereferencing the pointer to fit the constructor
 document
- : lpi suiteprolog element lpi      { *d = new Document(*$1, *$2, $3, *$4); }
+ : lpi suiteprolog tag lpi      { *d = new Document(*$1, *$2, *$3, *$4); }
  ;
 
 suiteprolog
@@ -79,8 +84,16 @@ doctypecl
 // EmptyTag :: $1 => char * | $2 => vector<Atts *> * 
 // Tag :: $2 => char * | $3 => vector<Atts *> * | $5 => vector<Item *> *
 element
+ : emptytag                { $$ = $1; }
+ | tag                     { $$ = $1; }
+ ;
+
+emptytag
  : INF NOM atts SLASH SUP /* emptytag */ { $$ = new EmptyTag(string($2), *$3); }
- | INF NOM atts SUP
+ ;
+
+tag
+ : INF NOM atts SUP
    content
    INF SLASH NOM SUP /* tag */           { $$ = new Tag(string($2), *$3, *$5); }
  | INF NOM COLON NOM atts SUP
