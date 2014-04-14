@@ -71,9 +71,9 @@ suiteprolog
 
 /* doctypecl param du parseur parsparam -> pointeur null qui sera affecté */
 doctypecl
- : DOCTYPE NOM                      { *dt = new Doctypedecl($2); }
- | DOCTYPE NOM NOM VALEUR           { *dt = new Doctypedecl($2, $3, $4); }
- | DOCTYPE NOM NOM VALEUR VALEUR    { *dt = new Doctypedecl($2, $3, $4, $5); }
+ : DOCTYPE NOM                      { *dt = new Doctypedecl(string($2); }
+ | DOCTYPE NOM NOM VALEUR           { *dt = new Doctypedecl(string($2), string($3), string($4)); }
+ | DOCTYPE NOM NOM VALEUR VALEUR    { *dt = new Doctypedecl(string($2), string($3), string($4), string($5)); }
  ;
  
 // EmptyTag :: $1 => char * | $2 => vector<Atts *> * 
