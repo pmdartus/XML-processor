@@ -1,10 +1,5 @@
 #include "atts.h"
 
-Atts::Atts(string, string) {
-    
-}
-
-
-Atts::~Atts() {
+Atts::Atts(string name, string value) : name(name), value(value) {
     
 }

@@ -1,20 +1,22 @@
 #ifndef DOCTYPEDECL_H
 #define DOCTYPEDECL_H
 
-#include <iostream>
+#include <string>
+
+using namespace std;
 
 class Doctypedecl {
-
+    
 private:
-    char * root_element;
-    char * external_id;
-    char * dtd_name;
-    char * dtd_location;
+    string root_element;
+    string external_id;
+    string dtd_name;
+    string dtd_location;
 
 public:
-    Doctypedecl(char * root_element);
-    Doctypedecl(char * root_element, char * external_id, char * dtd_name);
-    Doctypedecl(char * root_element, char * external_id, char * dtd_name, char * dtd_location);
+    Doctypedecl(string root_element);
+    Doctypedecl(string root_element, string external_id, string dtd_name);
+    Doctypedecl(string root_element, string external_id, string dtd_name, string dtd_location);
     ~Doctypedecl();
 
 };

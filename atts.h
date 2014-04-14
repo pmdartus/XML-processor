@@ -5,13 +5,12 @@
 
 using namespace std;
 
-class Atts {
-  
-private:
+struct Atts {
     
-public:
-    Atts(string, string);
-    ~Atts();
+    string name;
+    string value;
+    
+    Atts(string name, string value);
 };
 
 #endif

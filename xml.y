@@ -63,10 +63,10 @@ void xmlerror(Document ** d,
 
 %%
 
-// Document :: $1 => vector<Pi *> * | $2 => vector<Pi *> * | $3 => Item * | $4 => vector<Pi *> *
+// Document :: $1 => vector<Pi *> * | $2 => vector<Pi *> * | $3 => Tag * | $4 => vector<Pi *> *
 // Dereferencing the pointer to fit the constructor
 document
- : lpi suiteprolog tag lpi      { *d = new Document(*$1, *$2, *$3, *$4); }
+ : lpi suiteprolog tag lpi      { *d = new Document(*$1, *$2, $3, *$4); }
  ;
 
 suiteprolog
