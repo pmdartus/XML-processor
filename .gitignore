@@ -7,3 +7,4 @@ xmltool.*
 commun
 Tests/**/temp*
 Tests/results.csv
+.vagrant/
