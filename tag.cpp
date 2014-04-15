@@ -3,7 +3,7 @@
 Tag::Tag(string name, vector<Atts *> atts, vector<Item *> children) :
     Element(name, atts),
     children(children) {
-        cout << "Tag's constructor" << endl;
+        cout << "Tag's constructor"<< name << endl;
         for(vector<Item *>::iterator it = children.begin(); it != children.end(); it++) {
             (*it)->setParent(this);
         }

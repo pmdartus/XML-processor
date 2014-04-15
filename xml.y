@@ -84,8 +84,8 @@ doctypecl
  | DOCTYPE NOM NOM VALEUR           { *dt = new Doctypedecl(string($2), string($3), string($4)); }
  | DOCTYPE NOM NOM VALEUR VALEUR    { *dt = new Doctypedecl(string($2), string($3), string($4), string($5)); }
  ;
- 
-// EmptyTag :: $1 => char * | $2 => vector<Atts *> * 
+
+// EmptyTag :: $1 => char * | $2 => vector<Atts *> *
 // Tag :: $2 => char * | $3 => vector<Atts *> * | $5 => vector<Item *> *
 element
  : emptytag                { $$ = $1; }
@@ -99,10 +99,36 @@ emptytag
 tag
  : INF NOM atts SUP
    content
-   INF SLASH NOM SUP /* tag */           { $$ = new Tag(string($2), *$3, *$5); }
+   INF SLASH NOM SUP /* tag */            {
+                                             string tagNameBegin = string($2);
+                                             string tagNameEnd = string($8);
+                                             if(tagNameBegin.compare(tagNameEnd) != 0)
+                                             {
+                                                string msg = "Non matching element names " + tagNameBegin + " and " + tagNameEnd;
+                                                fprintf(stderr,"%s\n",msg.c_str());
+                                             }
+                                             $$ = new Tag(string($2), *$3, *$5);
+                                          }
  | INF NOM COLON NOM atts SUP
    content
-   INF SLASH NOM COLON NOM SUP /* tag avec espace de nom */ { $$ = new Tag(string($2) + ":" + string($4), *$5, *$7); }
+   INF SLASH NOM COLON NOM SUP /* tag avec espace de nom */ {
+                                                               string tagNSBegin = string($2);
+                                                               string tagNSEnd = string($10);
+                                                               if(tagNSBegin.compare(tagNSEnd) != 0)
+                                                               {
+                                                                  string msg = "Non matching element namespaces " + tagNSBegin + " and " + tagNSEnd;
+                                                                  fprintf(stderr,"%s\n",msg.c_str());
+                                                               }
+
+                                                               string tagNameBegin = string($4);
+                                                               string tagNameEnd = string($12);
+                                                               if(tagNameBegin.compare(tagNameEnd) != 0)
+                                                               {
+                                                                  string msg = "Non matching element names " + tagNameBegin + " and " + tagNameEnd;
+                                                                  fprintf(stderr,"%s\n",msg.c_str());
+                                                               }
+                                                               $$ = new Tag(string($2) + ":" + string($4), *$5, *$7);
+                                                            }
  ;
 
 // Atts :: $2 => char * | $3 => char *
