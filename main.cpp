@@ -83,8 +83,28 @@ int xmlParse(char* filename)
 
 int xmlTransform(char* xmlFileName, char* xslFileName)
 {
-   checkFileExistence(xmlFileName);
-   checkFileExistence(xslFileName);
+    checkFileExistence(xmlFileName);
+    checkFileExistence(xslFileName);
+
+    Document *xml = 0;
+    Doctypedecl *xmlDoctype = 0;
+    xmlparse(&xml, &xmlDoctype);
+
+    if (xml != 0 && xmlDoctype != 0)
+    {
+        xml->setDoctypedecl(xmlDoctype);
+    }
+
+    Document *xsl = 0;
+    Doctypedecl *xslDoctype = 0;
+    xmlparse(&xsl, &xslDoctype);
+
+    if (xsl != 0 && xslDoctype != 0)
+    {
+        xsl->setDoctypedecl(xslDoctype);
+    }
+
+    cout<<"coucou"<<endl;
 
    return 1;
 }
