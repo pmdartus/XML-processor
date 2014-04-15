@@ -8,5 +8,5 @@ const string Content::getText() const {
 
 void Content::print()
 {
-    cout << getText();
+    cout << getText()<<endl;
 }

@@ -35,8 +35,24 @@ void Document::setDoctypedecl(Doctypedecl *doctype) {
 }
 
 void Document::print() {
+    printPis(Document::misc_prolog);
+
     if (doctypedecl != 0) {
         doctypedecl->print();
     }
+
+    printPis(Document::misc_doctype);
+
     root->print();
+
+    printPis(Document::misc_element);
+}
+
+void Document::printPis(vector<Pi *> pis)
+{
+    vector<Pi *>::iterator it = pis.begin();
+    while (it != pis.end()) {
+        (*it)->print();
+        it++;
+    }
 }

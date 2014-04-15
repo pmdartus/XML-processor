@@ -31,6 +31,7 @@ string Element::attsToString()
         ret += (*it)->name + "=" + "\"" + (*it)->value + "\" ";
         it++;
     }
-    return ret;
+
+    return ret.substr(0, ret.size()-1);;
 }
 

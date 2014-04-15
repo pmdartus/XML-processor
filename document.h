@@ -23,6 +23,7 @@ public:
     const Tag * getRoot() const;
     void setDoctypedecl(Doctypedecl *doctype);
     void print();
+    void printPis(vector<Pi *> pis);
 };
 
 #endif

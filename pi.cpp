@@ -7,5 +7,5 @@ Pi::Pi(string name, vector<Atts *> atts) : Element(name, atts)
 
 void Pi::print()
 {
-    cout << "<?" << name << attsToString() << "?>" << endl;
+    cout << "<?" << name << " " << attsToString() << "?>" << endl;
 }
