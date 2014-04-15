@@ -63,13 +63,17 @@ int xmlParse(char* filename)
     Doctypedecl *doctype = 0;
     int retStatus = xmlparse(&doc, &doctype);
 
-    if (doc != 0) {
-        if (doctype != 0) {
+    if (doc != 0)
+    {
+        if (doctype != 0)
+        {
             doc->setDoctypedecl(doctype);
         }
 
         doc->print();
-    } else {
+    }
+    else
+    {
         return 0;
     }
 }
