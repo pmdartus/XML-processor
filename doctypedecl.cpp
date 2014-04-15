@@ -19,11 +19,11 @@ void Doctypedecl::print() {
 	cout << "<!DOCTYPE " << root_element;
 	if (external_id != "")
 	{
-		cout << " " << external_id << " " << dtd_name;
+		cout << " " << external_id << " \"" << dtd_name << "\"";
 
 		if (dtd_location != "")
 		{
-			cout << " " << dtd_location;
+			cout << " \"" << dtd_location << "\"";
 		}
 	}
 	cout << ">" << endl;
