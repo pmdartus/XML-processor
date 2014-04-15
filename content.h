@@ -6,14 +6,15 @@
 
 class Content : public Item
 {
-    
+
 private:
     string text;
-    
+
 public:
     Content(string text);
     const string getText() const;
-    
+
+    void print();
 };
 
 #endif
