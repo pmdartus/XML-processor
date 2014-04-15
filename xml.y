@@ -94,8 +94,9 @@ element
 
 // Atts :: $2 => char * | $3 => char *
 atts
- : atts NOM EGAL VALEUR      { $$ = $1; $$ -> push_back(new Atts(string($2), string($4))); }
- | /* vide */                { $$ = new vector <Atts *>(); }
+ : atts NOM EGAL VALEUR                { $$ = $1; $$ -> push_back(new Atts(string($2), string($4))); }
+ | atts NOM COLON NOM EGAL VALEUR      { $$ = $1; $$ -> push_back(new Atts(string($2) + ":" + string($4), string($6))); }
+ | /* vide */                          { $$ = new vector <Atts *>(); }
  ;
 
 // Pi :: $3 => char * | $4 => vector<Atts *> *
@@ -121,7 +122,8 @@ item
  ;
 
 emptytag
- : INF NOM atts SLASH SUP /* emptytag */ { $$ = new EmptyTag(string($2), *$3); }
+ : INF NOM atts SLASH SUP /* emptytag */           { $$ = new EmptyTag(string($2), *$3); }
+ | INF NOM COLON NOM atts SLASH SUP /* emptytag */ { $$ = new EmptyTag(string($2) + ":" + string($4), *$5); }
  ;
 
 tag
