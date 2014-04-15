@@ -8,7 +8,8 @@ class CData : public Content {
 
 public:
     CData(string text);
-    
+
+    void print();
 };
 
 #endif

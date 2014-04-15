@@ -18,6 +18,7 @@ using namespace std;
 #include "emptytag.h"
 #include "tag.h"
 #include "pi.h"
+#include "comment.h"
 
 extern char xmltext[];
 
@@ -117,7 +118,7 @@ item
  : element                                   { $$ = $1; }
  | CDATABEGIN CDATAEND /* cdsect */          { $$ = new CData(string($2)); }
  | INFSPECIAL NOM atts SUPSPECIAL /* pi */   { $$ = new Pi(string($2), *$3); }
- | COMMENT                                   { $$ = 0; }
+ | COMMENT                                   { $$ = new Comment(string($1)); }
  | DONNEES                                   { $$ = new Content(string($1)); }
  ;
 
