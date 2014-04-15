@@ -18,7 +18,7 @@ public:
     ~XMLTransformer();
 
     void exec();
-
+    void recusTemplating(Item* htmlTag, Item* xmlTag);
 };
 
 #endif

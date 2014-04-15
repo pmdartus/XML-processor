@@ -26,5 +26,31 @@ XMLTransformer::XMLTransformer(Document* xmlDoc, Document* xslSheet)
 
 void XMLTransformer::exec()
 {
+    vector<Item *> rootTemplate = XMLTransformer::templates["/"];
+    Tag* rootTag = (Tag*) rootTemplate[0];
+    Document* htmlDoc = new Document(rootTag);
 
+    recusTemplating(htmlDoc->getRoot(), XMLTransformer::xmlDoc->getRoot());
+
+    htmlDoc->print();
+}
+
+void XMLTransformer::recusTemplating(Item* htmlTag, Item* xmlTag)
+{
+    Element* currentHtmlElement = (Element*)htmlTag;
+
+    if (currentHtmlElement.getName().compare("xsl:value-of"))
+    {
+        cout<<"add info"<<endl;
+    }
+    else if(currentHtmlElement.getName().compare("xsl:apply-templates"))
+    {
+        cout<<"apply a template"<<endl;
+    }
+    else
+    {
+        for(vector<Item *>::iterator it = htmlTag.begin(); it != htmlTag.end(); ++it) {
+            recusTemplating((*it), xmlTag);
+        }
+    }
 }

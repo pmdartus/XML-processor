@@ -108,7 +108,8 @@ int xmlTransform(char* xmlFileName, char* xslFileName)
         xsl->setDoctypedecl(xslDoctype);
     }
 
-    XMLTransformer* tranformer = new XMLTransformer(xml, xsl);
+    XMLTransformer* transformer = new XMLTransformer(xml, xsl);
+    transformer->exec();
 
    return 1;
 }

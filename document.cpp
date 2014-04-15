@@ -1,5 +1,8 @@
 #include "document.h"
 
+Document::Document(Tag *root): root(root) {
+}
+
 Document::Document(vector<Pi *> misc_prolog, vector<Pi *> misc_doctype, Tag *root, vector<Pi *> misc_element) :
     misc_prolog(misc_prolog),
     misc_doctype(misc_doctype),
