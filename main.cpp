@@ -14,11 +14,17 @@ using namespace std;
 extern FILE *xmlin;
 int xmlparse (Document **d, Doctypedecl **dt);
 
+/**
+ * Return if the passed option existor not in the command
+ */
 bool cmdOptionExists(char** begin, char** end, const string& option)
 {
     return find(begin, end, option) != end;
 }
 
+/**
+ * Display help in the error channel
+ */
 bool cmdHelp(bool argumentsFound = true) {
     if (!argumentsFound)
     {
@@ -33,44 +39,49 @@ bool cmdHelp(bool argumentsFound = true) {
     return 1;
 }
 
-// Will exit the program when the file cannot be open
+/**
+ * Check if the file exist, if not the program exit and return a 1 status
+ */
 void checkFileExistence(char* filename)
 {
 
     FILE *fid = fopen(filename, "r");
     if (fid == NULL) {
        cerr << "Unable to open file " <<filename<< endl;
-       exit(-1);
+       exit(1);
     }
     xmlin = fid;
 }
 
+/**
+ * Parse and display the passed document
+ */
 int xmlParse(char* filename)
 {
     checkFileExistence(filename);
     Document *doc;
     Doctypedecl *doctype;
-    return xmlparse(&doc, &doctype);
+    int retStatus = xmlparse(&doc, &doctype);
+
+    doc->setDoctypedecl(doctype);
+    doc->print();
 }
 
-//int xmlTransform(char* xmlFileName, char* xslFileName)
-//{
-//    if(!isFileReadable(xmlFileName) || !isFileReadable(xslFileName))
-//    {
-//        return 1;
-//    }
-//
-//    return 1;
-//}
+int xmlTransform(char* xmlFileName, char* xslFileName)
+{
+   checkFileExistence(xmlFileName);
+   checkFileExistence(xslFileName);
 
-//int xmlValidate(char* xmlFileName, char* xsdFileName)
-//{
-//    if(!isFileReadable(xmlFileName) || !isFileReadable(xsdFileName))
-//    {
-//        return 1;
-//    }
-//    return 1;
-//}
+   return 1;
+}
+
+int xmlValidate(char* xmlFileName, char* xsdFileName)
+{
+   checkFileExistence(xmlFileName);
+   checkFileExistence(xsdFileName);
+
+   return 1;
+}
 
 int main(int argc, char* argv[])
 {
@@ -97,7 +108,7 @@ int main(int argc, char* argv[])
         {
             char *xmlFileName = argv[2];
             char *xslFileName = argv[3];
-//            return xmlTransform(xmlFileName, xslFileName);
+            return xmlTransform(xmlFileName, xslFileName);
         }
 
     }
@@ -111,7 +122,7 @@ int main(int argc, char* argv[])
         {
             char *xmlFileName = argv[2];
             char *xsdFileName = argv[3];
-            //return xmlValidate(xmlFileName, xsdFileName);
+            return xmlValidate(xmlFileName, xsdFileName);
         }
 
     }

@@ -22,6 +22,7 @@ public:
     ~Document();
     const Tag * getRoot() const;
     void setDoctypedecl(Doctypedecl *doctype);
+    void print();
 };
 
 #endif

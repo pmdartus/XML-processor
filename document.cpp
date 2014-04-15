@@ -10,7 +10,7 @@ Document::Document(vector<Pi *> misc_prolog, vector<Pi *> misc_doctype, Tag *roo
 
 Document::~Document() {
     vector<Pi *>::iterator it;
-    
+
     it = misc_prolog.begin();
     while (it != misc_prolog.end()) {
         it = misc_prolog.erase(it);
@@ -33,4 +33,8 @@ const Tag * Document::getRoot() const {
 
 void Document::setDoctypedecl(Doctypedecl *doctype) {
     doctypedecl = doctype;
+}
+
+void Document::print() {
+    cout<<"coucou"<<endl;
 }
