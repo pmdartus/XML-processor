@@ -3,17 +3,18 @@
 
 class tag;
 
-class Item 
+class Item
 {
 
 private:
-	
+
 public:
 	Item* parent = 0;
-    
+
     const Item * getParent() const;
     void setParent(Item *parent);
-    
+    virtual void print() = 0;
+
 };
 
 #endif
