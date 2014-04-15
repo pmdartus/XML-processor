@@ -27,7 +27,7 @@ void xmlerror(Document ** d,
                Doctypedecl ** dt,
                const char *msg)
 {
-   fprintf(stderr,"Error: %s\n",msg);
+   fprintf(stderr,"%s\n",msg);
 }
 
 %}

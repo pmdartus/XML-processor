@@ -74,6 +74,11 @@ int xmlParse(char* filename)
 
         return 0;
     }
+    else
+    {
+        cerr << "No root markup" << endl;
+        return 1;
+    }
 }
 
 int xmlTransform(char* xmlFileName, char* xslFileName)
