@@ -71,9 +71,7 @@ int xmlParse(char* filename)
         }
 
         doc->print();
-    }
-    else
-    {
+
         return 0;
     }
 }
