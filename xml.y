@@ -27,7 +27,7 @@ void xmlerror(Document ** d,
                Doctypedecl ** dt,
                const char *msg)
 {
-   fprintf(stderr,"%s\n",msg);
+   fprintf(stderr,"Error: %s\n",msg);
 }
 
 %}
@@ -80,9 +80,9 @@ suiteprolog
 
 /* doctypecl param du parseur parsparam -> pointeur null qui sera affecté */
 doctypecl
- : DOCTYPE NOM                      { *dt = new Doctypedecl(string($2)); }
- | DOCTYPE NOM NOM VALEUR           { *dt = new Doctypedecl(string($2), string($3), string($4)); }
- | DOCTYPE NOM NOM VALEUR VALEUR    { *dt = new Doctypedecl(string($2), string($3), string($4), string($5)); }
+ : DOCTYPE NOM SUP                      { *dt = new Doctypedecl(string($2)); }
+ | DOCTYPE NOM NOM VALEUR SUP           { *dt = new Doctypedecl(string($2), string($3), string($4)); }
+ | DOCTYPE NOM NOM VALEUR VALEUR SUP    { *dt = new Doctypedecl(string($2), string($3), string($4), string($5)); }
  ;
 
 // EmptyTag :: $1 => char * | $2 => vector<Atts *> *
@@ -90,6 +90,34 @@ doctypecl
 element
  : emptytag                { $$ = $1; }
  | tag                     { $$ = $1; }
+ ;
+
+// Atts :: $2 => char * | $3 => char *
+atts
+ : atts NOM EGAL VALEUR      { $$ = $1; $$ -> push_back(new Atts(string($2), string($4))); }
+ | /* vide */                { $$ = new vector <Atts *>(); }
+ ;
+
+// Pi :: $3 => char * | $4 => vector<Atts *> *
+lpi
+ : lpi INFSPECIAL NOM atts SUPSPECIAL     { $$ = $1; $$ -> push_back(new Pi(string($3), *$4)); }
+ | /* vide */                             { $$ = new vector <Pi *>(); }
+ ;
+
+content
+ : content item         { $$ = $1; if($2) { $$ -> push_back($2); } }
+ | /* vide */           { $$ = new vector <Item *>(); }
+ ;
+
+
+// Content :: $2 => char *
+// CData :: $2 => char *
+item
+ : element                                   { $$ = $1; }
+ | CDATABEGIN CDATAEND /* cdsect */          { $$ = new CData(string($2)); }
+ | INFSPECIAL NOM atts SUPSPECIAL /* pi */   { $$ = new Pi(string($2), *$3); }
+ | COMMENT                                   { $$ = 0; }
+ | DONNEES                                   { $$ = new Content(string($1)); }
  ;
 
 emptytag
@@ -129,32 +157,4 @@ tag
                                                                }
                                                                $$ = new Tag(string($2) + ":" + string($4), *$5, *$7);
                                                             }
- ;
-
-// Atts :: $2 => char * | $3 => char *
-atts
- : atts NOM EGAL VALEUR      { $$ = $1; $$ -> push_back(new Atts(string($2), string($4))); }
- | /* vide */                { $$ = new vector <Atts *>(); }
- ;
-
-// Pi :: $3 => char * | $4 => vector<Atts *> *
-lpi
- : lpi INFSPECIAL NOM atts SUPSPECIAL		{ $$ = $1; $$ -> push_back(new Pi(string($3), *$4)); }
- | /* vide */										{ $$ = new vector <Pi *>(); }
- ;
-
-content
- : content item         { $$ = $1; if($2) { $$ -> push_back($2); } }
- | /* vide */           { $$ = new vector <Item *>(); }
- ;
-
-
-// Content :: $2 => char *
-// CData :: $2 => char *
-item
- : element                                   { $$ = $1; }
- | CDATABEGIN CDATAEND /* cdsect */          { $$ = new CData(string($2)); }
- | INFSPECIAL NOM atts SUPSPECIAL /* pi */   { $$ = new Pi(string($2), *$3); }
- | COMMENT                                   { $$ = 0; }
- | DONNEES                                   { $$ = new Content(string($1)); }
  ;
