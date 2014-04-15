@@ -5,7 +5,6 @@ Document::Document(vector<Pi *> misc_prolog, vector<Pi *> misc_doctype, Tag *roo
     misc_doctype(misc_doctype),
     root(root),
     misc_element(misc_element) {
-        cout << "Document's constructor" << endl;
 }
 
 Document::~Document() {
@@ -40,5 +39,4 @@ void Document::print() {
         doctypedecl->print();
     }
     root->print();
-    cout << "Fuck yea!" << endl;
 }

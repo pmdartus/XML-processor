@@ -6,11 +6,9 @@ Element::Element(string name, vector<Atts *> atts) {
     Element::name = name;
     Element::atts = atts;
     Element::parent = 0;
-    cout << "Element's constructor" << endl;
 }
 
 Element::~Element() {
-    cout << "Element's destructor" << endl;
     vector<Atts *>::iterator it = atts.begin();
     while (it != atts.end()) {
         it = atts.erase(it);
@@ -31,6 +29,7 @@ string Element::attsToString()
     vector<Atts *>::iterator it = Element::atts.begin();
     while (it != atts.end()) {
         ret += (*it)->name + "=" + "\"" + (*it)->value + "\" ";
+        it++;
     }
     return ret;
 }
