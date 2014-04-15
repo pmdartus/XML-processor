@@ -18,11 +18,7 @@ Tag::~Tag() {
 }
 
 void Tag::print() {
-        cout << "<" << name;
-        for(vector<Atts *>::iterator it = atts.begin(); it != atts.end(); ++it) {
-            cout << " " << (*it)->name << "=" << "\"" << (*it)->value << "\"";
-        }
-        cout << ">"<<endl;
+        cout << "<" << name << Element::attsToString() << ">" << endl;
 
         for(vector<Item *>::iterator it = children.begin(); it != children.end(); ++it) {
             (*it)->print();

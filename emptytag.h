@@ -9,6 +9,8 @@ class EmptyTag : public Element {
 private:
 public:
     EmptyTag(string name, vector<Atts *> atts);
+
+    void print();
 };
 
 #endif

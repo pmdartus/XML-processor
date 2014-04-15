@@ -10,6 +10,8 @@ private:
 
 public:
     Pi(string name, vector<Atts *> atts);
+
+    void print();
 };
 
 #endif

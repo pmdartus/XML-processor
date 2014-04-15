@@ -19,6 +19,8 @@ public:
     const string getName() const;
     vector<Atts*> getAtts() const;
 
+    string attsToString();
+
 };
 
 #endif

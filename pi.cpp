@@ -1,11 +1,12 @@
 #include "pi.h"
+#include <iostream>
 
 Pi::Pi(string name, vector<Atts *> atts) : Element(name, atts)
 {
-	std::cout << "Pi's constructor" << std::endl;
+	cout << "Pi's constructor" << endl;
 }
 
 void Pi::print()
 {
-
+    cout << "<?" << name << attsToString() << "?>" << endl;
 }
