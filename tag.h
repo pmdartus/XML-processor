@@ -11,10 +11,12 @@ class Tag : public Element
 
 private:
     vector<Item*> children;
-    
+
 public:
     Tag(string name, vector<Atts *> atts, vector<Item *> children);
     ~Tag();
+
+    const vector<Item*> getChildren() const;
     void print();
 };
 

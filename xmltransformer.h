@@ -3,16 +3,21 @@
 
 #include "commun.h"
 #include "document.h"
+#include <map>
+
+typedef map<string,vector<Item*>> TemplatesLib;
 
 class XMLTransformer {
 
 private:
   Document* xmlDoc;
-  Document* xslSheet;
+  TemplatesLib templates;
 
 public:
     XMLTransformer(Document* xmlDoc, Document* xslSheet);
     ~XMLTransformer();
+
+    void exec();
 
 };
 
