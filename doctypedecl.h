@@ -6,10 +6,10 @@
 class Doctypedecl {
     
 private:
-    string root_element;
-    string external_id;
-    string dtd_name;
-    string dtd_location;
+    string root_element = "";
+    string external_id = "";
+    string dtd_name = "";
+    string dtd_location = "";
 
 public:
     Doctypedecl(string root_element);
