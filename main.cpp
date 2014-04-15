@@ -1,5 +1,6 @@
 #include "commun.h"
 #include "document.h"
+#include "xmltransformer.h"
 #include "doctypedecl.h"
 
 #include <unistd.h>
@@ -106,6 +107,8 @@ int xmlTransform(char* xmlFileName, char* xslFileName)
     {
         xsl->setDoctypedecl(xslDoctype);
     }
+
+    XMLTransformer* tranformer = new XMLTransformer(xml, xsl);
 
    return 1;
 }
