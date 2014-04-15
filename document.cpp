@@ -36,5 +36,9 @@ void Document::setDoctypedecl(Doctypedecl *doctype) {
 }
 
 void Document::print() {
-    cout<<"coucou"<<endl;
+    if (doctypedecl != 0) {
+        doctypedecl->print();
+    }
+    root->print();
+    cout << "Fuck yea!" << endl;
 }

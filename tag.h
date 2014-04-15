@@ -15,6 +15,7 @@ private:
 public:
     Tag(string name, vector<Atts *> atts, vector<Item *> children);
     ~Tag();
+    void print();
 };
 
 #endif

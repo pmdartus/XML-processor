@@ -16,7 +16,7 @@ private:
     vector<Pi *> misc_doctype;
     Tag *root;
     vector<Pi *> misc_element;
-    Doctypedecl *doctypedecl;
+    Doctypedecl *doctypedecl = 0;
 public:
     Document(vector<Pi *> misc_prolog, vector<Pi *> misc_doctype, Tag *root, vector<Pi *> misc_element);
     ~Document();

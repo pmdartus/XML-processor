@@ -16,3 +16,13 @@ Tag::~Tag() {
         it = children.erase(it);
     }
 }
+
+void Tag::print() {
+        cout << "<" << name;
+        // TODO args
+        cout << ">"<<endl;
+
+        // TODO childs
+
+        cout << "</" << name << ">"<<endl;
+}

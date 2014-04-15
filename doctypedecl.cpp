@@ -14,3 +14,15 @@ Doctypedecl::Doctypedecl(string root_element, string external_id, string dtd_nam
     external_id(external_id),
     dtd_name(dtd_name),
     dtd_location(dtd_location) {}
+
+void Doctypedecl::print() {
+		cout << "<!DOCTYPE " << root_element;
+		if (external_id.empty()) {
+			cout << " " << external_id << " " << dtd_name << endl;
+
+			if (dtd_location.empty()) {
+				cout << " " << dtd_location << endl;
+			}
+		}
+		cout << ">" << endl;
+}
