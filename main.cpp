@@ -59,12 +59,23 @@ void checkFileExistence(char* filename)
 int xmlParse(char* filename)
 {
     checkFileExistence(filename);
-    Document *doc;
-    Doctypedecl *doctype;
+    Document *doc = 0;
+    Doctypedecl *doctype = 0;
     int retStatus = xmlparse(&doc, &doctype);
 
-    doc->setDoctypedecl(doctype);
-    doc->print();
+    if (doc != 0)
+    {
+        if (doctype != 0)
+        {
+            doc->setDoctypedecl(doctype);
+        }
+
+        doc->print();
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 int xmlTransform(char* xmlFileName, char* xslFileName)
