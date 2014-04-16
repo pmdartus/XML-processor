@@ -57,17 +57,17 @@ void checkFileExistence(char* filename)
 /**
  * Parse and display the passed document
  */
-int xmlParse(char* filename, Document* doc)
+int xmlParse(char* filename, Document** doc)
 {
     checkFileExistence(filename);
     Doctypedecl *doctype = 0;
-    int retStatus = xmlparse(&doc, &doctype);
+    int retStatus = xmlparse(doc, &doctype);
 
     if (doc != 0)
     {
         if (doctype != 0)
         {
-            doc->setDoctypedecl(doctype);
+            (*doc)->setDoctypedecl(doctype);
         }
 
         return 1;
@@ -89,7 +89,7 @@ int xmlTransform(char* xmlFileName, char* xslFileName)
 int xmlValidate(char* xmlFileName, char* xsdFileName)
 {
     Document *xsd = 0;
-    int parseXsd = xmlParse(xsdFileName, xsd);
+    int parseXsd = xmlParse(xsdFileName, &xsd);
     Xmlvalidator* xval = new Xmlvalidator();
     if (parseXsd)
     {
@@ -97,7 +97,7 @@ int xmlValidate(char* xmlFileName, char* xsdFileName)
     }
 
     Document *xml = 0;
-    int parseXml = xmlParse(xmlFileName, xml);
+    int parseXml = xmlParse(xmlFileName, &xml);
 
     return 1;
 }
@@ -115,7 +115,7 @@ int main(int argc, char* argv[])
         {
             char *fileName = argv[2];
             Document *doc = 0;
-            int parse = xmlParse(fileName, doc);
+            int parse = xmlParse(fileName, &doc);
             doc->print();
             return parse;
         }
