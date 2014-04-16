@@ -57,6 +57,9 @@ string Xmlvalidator::choiceRegex(Tag* choice) {
 		for(vector<Atts *>::iterator itPar = params.begin(); itPar != params.end(); itPar++) {
 			if ((*itPar)->name == "name") {
 				nameElem = (*itPar)->value;
+
+				// Adding it into the regex
+				regex += "(<"+nameElem+">)";
 			}
 			else if ((*itPar)->name == "type") {
 				type = (*itPar)->value;
@@ -65,8 +68,6 @@ string Xmlvalidator::choiceRegex(Tag* choice) {
 
 		mapType.insert(pair<string, string>(nameElem, type));
 		cout << nameElem << " is added to mapType as a " << type  << endl;
-
-		regex += "(<"+nameElem+">)";
 
 		if (itCh != children.end()-1) {
 			regex += "|";
@@ -80,8 +81,34 @@ string Xmlvalidator::choiceRegex(Tag* choice) {
 
 string Xmlvalidator::seqRegex(Tag* seq) {
 	cout << "Processing a sequence complexType " << endl;
-	// TODO
-	return "";
+
+	string regex = "^(";
+
+	vector<Item *> children = seq->getChildren();
+	for(vector<Item *>::iterator itCh = children.begin(); itCh != children.end(); itCh++) {
+		vector<Atts *> params = ((Tag *) (*itCh))->getAtts();
+		string nameElem = "";
+		string nb = "";
+
+		for(vector<Atts *>::iterator itPar = params.begin(); itPar != params.end(); itPar++) {
+			if ((*itPar)->name == "ref") {
+				nameElem = (*itPar)->value;
+
+				// Adding it into the regex
+				regex += "(<"+nameElem+">)";
+			}
+			else if ((*itPar)->name == "maxOccurs") {
+				nb = (*itPar)->value;
+
+				// Adding it into the regex
+				regex += "{,"+nb+"}";
+			}
+		}
+	}
+
+	regex += ")$";
+	
+	return regex;
 }
 
 void Xmlvalidator::validityCheck(Document *xml) {
