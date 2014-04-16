@@ -7,8 +7,8 @@ void Xmlvalidator::mapsCreate(Document *xsd) {
 	// Check that the root is a schema
 	if (xsd->getRoot()->getName() == "xsd:schema")
 	{
-		string name = xsd->getRoot()->getAtts().first();
-		cout << "Start creating the maps for " << name << endl;
+		vector<Item*> children = xsd->getRoot()->getChildren();
+		cout << "Start creating the maps" << endl;
 		// TODO
 	}
 	else
