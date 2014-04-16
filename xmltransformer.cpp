@@ -35,15 +35,15 @@ void XMLTransformer::exec()
     htmlDoc->print();
 }
 
-void XMLTransformer::recusTemplating(Item* htmlTag, Item* xmlTag)
+void XMLTransformer::recusTemplating(const Item* htmlTag, const Item* xmlTag) const
 {
     Element* currentHtmlElement = (Element*)htmlTag;
 
-    if (currentHtmlElement.getName().compare("xsl:value-of"))
+    if (currentHtmlElement->getName().compare("xsl:value-of"))
     {
         cout<<"add info"<<endl;
     }
-    else if(currentHtmlElement.getName().compare("xsl:apply-templates"))
+    else if(currentHtmlElement->getName().compare("xsl:apply-templates"))
     {
         cout<<"apply a template"<<endl;
     }

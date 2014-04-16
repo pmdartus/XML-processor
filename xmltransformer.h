@@ -18,7 +18,7 @@ public:
     ~XMLTransformer();
 
     void exec();
-    void recusTemplating(Item* htmlTag, Item* xmlTag);
+    void recusTemplating(const Item* htmlTag, const Item* xmlTag) const;
 };
 
 #endif
