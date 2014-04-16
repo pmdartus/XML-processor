@@ -22,14 +22,19 @@ void Xmlvalidator::mapsCreate(Document *xsd) {
             Tag * construction = (Tag *) type->getChildren().front();
             cout << "Will create a regex for " << construction->getName() << endl;
 
+            string regex = "";
+
             if (construction->getName() == "xsd:choice")
             {
-            	choiceRegex(construction);
+            	regex = choiceRegex(construction);
             }
             else if (construction->getName() == "xsd:sequence")
             {
-            	seqRegex(construction);
+            	regex = seqRegex(construction);
             }
+
+			mapRegex.insert(pair<string, string>(name, regex));
+			cout << "Regex added : " << regex << " for " << name << endl;
         }
 		// TODO
 	}
@@ -39,15 +44,44 @@ void Xmlvalidator::mapsCreate(Document *xsd) {
 	}
 }
 
-void Xmlvalidator::choiceRegex(Tag* choice) {
+string Xmlvalidator::choiceRegex(Tag* choice) {
 	cout << "Processing a choice complexType " << endl;
-	// TODO
-    // mapRegex.insert(pair<string, string>(name, regex));
+	string regex = "^(";
+
+	vector<Item *> children = choice->getChildren();
+	for(vector<Item *>::iterator itCh = children.begin(); itCh != children.end(); itCh++) {
+		vector<Atts *> params = ((Tag *) (*itCh))->getAtts();
+		string nameElem = "";
+		string type = "";
+
+		for(vector<Atts *>::iterator itPar = params.begin(); itPar != params.end(); itPar++) {
+			if ((*itPar)->name == "name") {
+				nameElem = (*itPar)->value;
+			}
+			else if ((*itPar)->name == "type") {
+				type = (*itPar)->value;
+			}
+		}
+
+		mapType.insert(pair<string, string>(nameElem, type));
+		cout << nameElem << " is added to mapType as a " << type  << endl;
+
+		regex += "(<"+nameElem+">)";
+
+		if (itCh != children.end()-1) {
+			regex += "|";
+		}
+	}
+
+	regex += ")$";
+	
+	return regex;
 }
 
-void Xmlvalidator::seqRegex(Tag* seq) {
+string Xmlvalidator::seqRegex(Tag* seq) {
 	cout << "Processing a sequence complexType " << endl;
 	// TODO
+	return "";
 }
 
 void Xmlvalidator::validityCheck(Document *xml) {
