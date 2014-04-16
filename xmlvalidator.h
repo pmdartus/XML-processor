@@ -12,8 +12,7 @@ class Xmlvalidator {
 private:
     map<string, string> mapType;
     map<string, string> mapRegex;
-    string choiceRegex(Tag* choice);
-    string seqRegex(Tag* seq);
+    string createRegex(Tag* construction, string elType);
 public:
     Xmlvalidator();
     ~Xmlvalidator();

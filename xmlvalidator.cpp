@@ -22,16 +22,7 @@ void Xmlvalidator::mapsCreate(Document *xsd) {
             Tag * construction = (Tag *) type->getChildren().front();
             cout << "Will create a regex for " << construction->getName() << endl;
 
-            string regex = "";
-
-            if (construction->getName() == "xsd:choice")
-            {
-            	regex = choiceRegex(construction);
-            }
-            else if (construction->getName() == "xsd:sequence")
-            {
-            	regex = seqRegex(construction);
-            }
+            string regex = createRegex(construction, construction->getName());
 
 			mapRegex.insert(pair<string, string>(name, regex));
 			cout << "Regex added : " << regex << " for " << name << endl;
@@ -44,18 +35,19 @@ void Xmlvalidator::mapsCreate(Document *xsd) {
 	}
 }
 
-string Xmlvalidator::choiceRegex(Tag* choice) {
-	cout << "Processing a choice complexType " << endl;
+string Xmlvalidator::createRegex(Tag* construction, string elType) {
+	cout << "Creating a regex " << endl;
 	string regex = "^(";
 
-	vector<Item *> children = choice->getChildren();
+	vector<Item *> children = construction->getChildren();
 	for(vector<Item *>::iterator itCh = children.begin(); itCh != children.end(); itCh++) {
 		vector<Atts *> params = ((Tag *) (*itCh))->getAtts();
 		string nameElem = "";
 		string type = "";
+		string nb = "";
 
 		for(vector<Atts *>::iterator itPar = params.begin(); itPar != params.end(); itPar++) {
-			if ((*itPar)->name == "name") {
+			if ((*itPar)->name == "name" || (*itPar)->name == "ref") {
 				nameElem = (*itPar)->value;
 
 				// Adding it into the regex
@@ -64,45 +56,19 @@ string Xmlvalidator::choiceRegex(Tag* choice) {
 			else if ((*itPar)->name == "type") {
 				type = (*itPar)->value;
 			}
-		}
-
-		mapType.insert(pair<string, string>(nameElem, type));
-		cout << nameElem << " is added to mapType as a " << type  << endl;
-
-		if (itCh != children.end()-1) {
-			regex += "|";
-		}
-	}
-
-	regex += ")$";
-	
-	return regex;
-}
-
-string Xmlvalidator::seqRegex(Tag* seq) {
-	cout << "Processing a sequence complexType " << endl;
-
-	string regex = "^(";
-
-	vector<Item *> children = seq->getChildren();
-	for(vector<Item *>::iterator itCh = children.begin(); itCh != children.end(); itCh++) {
-		vector<Atts *> params = ((Tag *) (*itCh))->getAtts();
-		string nameElem = "";
-		string nb = "";
-
-		for(vector<Atts *>::iterator itPar = params.begin(); itPar != params.end(); itPar++) {
-			if ((*itPar)->name == "ref") {
-				nameElem = (*itPar)->value;
-
-				// Adding it into the regex
-				regex += "(<"+nameElem+">)";
-			}
 			else if ((*itPar)->name == "maxOccurs") {
 				nb = (*itPar)->value;
 
 				// Adding it into the regex
 				regex += "{,"+nb+"}";
 			}
+		}
+
+		mapType.insert(pair<string, string>(nameElem, type));
+		cout << nameElem << " is added to mapType as a " << type  << endl;
+
+		if ((elType == "xsd:choice") && (itCh != children.end()-1)) {
+			regex += "|";
 		}
 	}
 
