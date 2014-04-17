@@ -59,7 +59,7 @@ string Xmlvalidator::createRegex(Tag* construction, string elType) {
 				nb = (*itPar)->value;
 
 				// Adding it into the regex
-				regex += "{,"+nb+"}";
+				regex += "{0,"+nb+"}";
 			}
 		}
 
@@ -132,12 +132,16 @@ int Xmlvalidator::checkNode(Item* node) {
 		if (itRegex->second == "") {
 			std::map<string,string>::iterator itType = mapType.find(name);
 		 	itRegex = mapRegex.find(itType->second);
-		 	cout << "New regex " << itRegex->second << " for " << itType->second << endl;
 		}
 
 		string regex = itRegex->second;
 
 		cout << "DO THE CHECK " << regex << " on " << transfo << " for the node " << name << endl;
+		std::regex rx(regex);
+		int check = regex_match(transfo.begin(), transfo.end(), rx);
+		cout << check << endl;
+
+		return check;
 	}
 
 	return 1;
