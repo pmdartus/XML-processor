@@ -79,7 +79,7 @@ int Xmlvalidator::validityCheck(Document *xml) {
 
 	if (itRegex->second == "") {
 	    mapRegex.insert(pair<string, string>("xsd:string", "^[^*+]+$"));
-	    mapRegex.insert(pair<string, string>("xsd:date", "[1-9][0-9]{3}-[0-9][12]-[0-3][0-9]"));
+	    mapRegex.insert(pair<string, string>("xsd:date", "[1-9][0-9]{3}-[01][0-9]-[0-3][0-9]"));
 	}
 
 	int valid = checkNode((Item *) xml->getRoot());
