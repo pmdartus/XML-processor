@@ -77,7 +77,7 @@ int Xmlvalidator::validityCheck(Document *xml) {
 	//Insert basic XSD types
 	std::map<string,string>::iterator itRegex = mapRegex.find("xsd:string");
 
-	if (itRegex->second == "") {
+	if (itRegex == mapRegex.end()) {
 	    mapRegex.insert(pair<string, string>("xsd:string", "^[^*+]+$"));
 	    mapRegex.insert(pair<string, string>("xsd:date", "[1-9][0-9]{3}-[01][0-9]-[0-3][0-9]"));
 	}
@@ -122,9 +122,15 @@ int Xmlvalidator::checkNode(Item* node) {
 
 		std::map<string,string>::iterator itRegex = mapRegex.find(name);
 
-		if (itRegex->second == "") {
+		if (itRegex == mapRegex.end())
+		{
 			std::map<string,string>::iterator itType = mapType.find(name);
 		 	itRegex = mapRegex.find(itType->second);
+			
+			if (itRegex == mapRegex.end())
+			{
+		 		cerr << "XSD not exhaustive for this xml. Missing regex for the type " << itType->second << endl;
+		 	}
 		}
 
 		string regex = itRegex->second;
