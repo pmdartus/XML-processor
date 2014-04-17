@@ -132,7 +132,7 @@ int main(int argc, char* argv[])
             Document *doc = 0;
             int parse = xmlParse(fileName, &doc);
             doc->print();
-            return parse;
+            return 0;
         }
     }
     else if (cmdOptionExists(argv, argv+argc, "-t"))
