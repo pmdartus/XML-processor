@@ -36,7 +36,6 @@ void Xmlvalidator::mapsCreate(Document *xsd) {
 }
 
 string Xmlvalidator::createRegex(Tag* construction, string elType) {
-	cout << "Creating a regex " << endl;
 	string regex = "^(";
 
 	vector<Item *> children = construction->getChildren();
@@ -77,5 +76,59 @@ string Xmlvalidator::createRegex(Tag* construction, string elType) {
 	return regex;
 }
 
-void Xmlvalidator::validityCheck(Document *xml) {
+int Xmlvalidator::validityCheck(Document *xml) {
+	int valid = checkNode((Item *) xml->getRoot());
+
+	cout << "The document is " << valid << endl;
+
+	return valid;
+}
+
+// 0 -> not valid; 1 -> valid
+int Xmlvalidator::checkNode(Item* node) {
+	Tag* tagNode = dynamic_cast<Tag *>(node);
+
+	if (tagNode) {
+		string name = tagNode->getName();
+		string transfo = "";
+
+		vector<Item *> children = tagNode->getChildren();
+		for(vector<Item *>::iterator itCh = children.begin(); itCh != children.end(); itCh++) {
+			Element* elNode = dynamic_cast<Element *>(*itCh);
+			if (elNode)
+			{
+				transfo += "<"+elNode->getName()+">";
+			}
+			else
+			{
+				Content* ctNode = dynamic_cast<Content *>(*itCh);
+				if (ctNode)
+				{
+					transfo += ctNode->getText();
+				}
+
+			}
+
+			// Recursive call for each children
+			if (checkNode((*itCh)) == 0)
+			{
+				// if it is not valid
+				return 0;
+			}
+		}
+
+		std::map<string,string>::iterator itRegex = mapRegex.find(name);
+
+		if (itRegex->second == "") {
+			std::map<string,string>::iterator itType = mapType.find(name);
+		 	itRegex = mapRegex.find(itType->second);
+		 	cout << "New regex " << itRegex->second << " for " << itType->second << endl;
+		}
+
+		string regex = itRegex->second;
+
+		cout << "DO THE CHECK " << regex << " on " << transfo << " for the node " << name << endl;
+	}
+
+	return 1;
 }

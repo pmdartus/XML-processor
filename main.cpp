@@ -98,6 +98,10 @@ int xmlValidate(char* xmlFileName, char* xsdFileName)
 
     Document *xml = 0;
     int parseXml = xmlParse(xmlFileName, &xml);
+    if (parseXml)
+    {
+        xval->validityCheck(xml);
+    }
 
     return 1;
 }
