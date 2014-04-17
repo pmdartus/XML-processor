@@ -88,6 +88,9 @@ int xmlTransform(char* xmlFileName, char* xslFileName)
 
 int xmlValidate(char* xmlFileName, char* xsdFileName)
 {
+    checkFileExistence(xmlFileName);
+    checkFileExistence(xsdFileName);
+
     Document *xsd = 0;
     int parseXsd = xmlParse(xsdFileName, &xsd);
     Xmlvalidator* xval = new Xmlvalidator();
