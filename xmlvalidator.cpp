@@ -63,8 +63,10 @@ string Xmlvalidator::createRegex(Tag* construction, string elType) {
 			}
 		}
 
-		mapType.insert(pair<string, string>(nameElem, type));
-		cout << nameElem << " is added to mapType as a " << type  << endl;
+		if (type != "") {
+			mapType.insert(pair<string, string>(nameElem, type));
+			cout << nameElem << " is added to mapType as a " << type  << endl;
+		}
 
 		if ((elType == "xsd:choice") && (itCh != children.end()-1)) {
 			regex += "|";
