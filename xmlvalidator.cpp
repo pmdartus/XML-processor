@@ -7,27 +7,22 @@ void Xmlvalidator::mapsCreate(Document *xsd) {
 	// Check that the root is a schema
 	if (xsd->getRoot()->getName() == "xsd:schema")
 	{
-		cout << "Start creating the maps" << endl;
-
 		// Get all the childrens
 		vector<Item*> children = xsd->getRoot()->getChildren();
 
 		for(vector<Item *>::iterator itElem = children.begin(); itElem != children.end(); itElem++) {
 			// Get the actual element name
             string name = ((Tag *) (*itElem))->getAtts().front()->value;
-            cout << "Get ready for the regex of " << name << endl;
 
             // Get the contruction node
             Tag * type = (Tag *) ((Tag *) (*itElem))->getChildren().front();
             Tag * construction = (Tag *) type->getChildren().front();
-            cout << "Will create a regex for " << construction->getName() << endl;
 
             string regex = createRegex(construction, construction->getName());
 
 			mapRegex.insert(pair<string, string>(name, regex));
-			cout << "Regex added : " << regex << " for " << name << endl;
+			// cout << "Regex added : " << regex << " for " << name << endl;
         }
-		// TODO
 	}
 	else
 	{
@@ -65,7 +60,7 @@ string Xmlvalidator::createRegex(Tag* construction, string elType) {
 
 		if (type != "") {
 			mapType.insert(pair<string, string>(nameElem, type));
-			cout << nameElem << " is added to mapType as a " << type  << endl;
+			// cout << nameElem << " is added to mapType as a " << type  << endl;
 		}
 
 		if ((elType == "xsd:choice") && (itCh != children.end()-1)) {
@@ -88,8 +83,6 @@ int Xmlvalidator::validityCheck(Document *xml) {
 	}
 
 	int valid = checkNode((Item *) xml->getRoot());
-
-	cout << "The document is " << valid << endl;
 
 	return valid;
 }
@@ -136,12 +129,9 @@ int Xmlvalidator::checkNode(Item* node) {
 
 		string regex = itRegex->second;
 
-		cout << "DO THE CHECK " << regex << " on " << transfo << " for the node " << name << endl;
+		// cout << "DO THE CHECK " << regex << " on " << transfo << " for the node " << name << endl;
 		std::regex rx(regex);
-		int check = regex_match(transfo.begin(), transfo.end(), rx);
-		cout << check << endl;
-
-		return check;
+		return regex_match(transfo.begin(), transfo.end(), rx);
 	}
 
 	return 1;

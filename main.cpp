@@ -98,12 +98,20 @@ int xmlValidate(char* xmlFileName, char* xsdFileName)
 
     Document *xml = 0;
     int parseXml = xmlParse(xmlFileName, &xml);
+    int validation;
     if (parseXml)
     {
-        xval->validityCheck(xml);
+        validation = xval->validityCheck(xml);
+
+        cout << "The file " << xmlFileName << " is ";
+        if (validation == 0)
+        {
+            cout << "not ";
+        }
+        cout <<  "valid wrt " << xsdFileName << "" << endl;
     }
 
-    return 1;
+    return 0;
 }
 
 int main(int argc, char* argv[])
