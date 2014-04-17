@@ -79,6 +79,14 @@ string Xmlvalidator::createRegex(Tag* construction, string elType) {
 }
 
 int Xmlvalidator::validityCheck(Document *xml) {
+	//Insert basic XSD types
+	std::map<string,string>::iterator itRegex = mapRegex.find("xsd:string");
+
+	if (itRegex->second == "") {
+	    mapRegex.insert(pair<string, string>("xsd:string", "^[^*+]+$"));
+	    mapRegex.insert(pair<string, string>("xsd:date", "[1-9][0-9]{3}-[0-9][12]-[0-3][0-9]"));
+	}
+
 	int valid = checkNode((Item *) xml->getRoot());
 
 	cout << "The document is " << valid << endl;
