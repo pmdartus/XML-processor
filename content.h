@@ -3,6 +3,7 @@
 
 #include "element.h"
 #include "commun.h"
+#include <vector>
 
 class Content : public Item
 {
@@ -15,6 +16,7 @@ public:
     const string getText() const;
 
     void print();
+    const vector<Item*> getChildren() const;
 };
 
 #endif

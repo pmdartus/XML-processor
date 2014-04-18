@@ -20,7 +20,7 @@ public:
     vector<Atts*> getAtts() const;
 
     string attsToString();
-
+    virtual const vector<Item*> getChildren() const = 0;
 };
 
 #endif

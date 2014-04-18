@@ -39,17 +39,20 @@ void XMLTransformer::recusTemplating(const Item* htmlTag, const Item* xmlTag) co
 {
     Element* currentHtmlElement = (Element*)htmlTag;
 
-    if (currentHtmlElement->getName().compare("xsl:value-of"))
+
+    if (currentHtmlElement->getName().compare("xsl:value-of") == 0)
     {
         cout<<"add info"<<endl;
     }
-    else if(currentHtmlElement->getName().compare("xsl:apply-templates"))
+    else if(currentHtmlElement->getName().compare("xsl:apply-templates") == 0)
     {
         cout<<"apply a template"<<endl;
     }
     else
     {
-        for(vector<Item *>::iterator it = htmlTag.begin(); it != htmlTag.end(); ++it) {
+        vector<Item*> childrens = htmlTag->getChildren();
+
+        for(vector<Item *>::iterator it = childrens.begin(); it != childrens.end(); ++it) {
             recusTemplating((*it), xmlTag);
         }
     }

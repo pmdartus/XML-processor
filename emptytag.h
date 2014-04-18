@@ -11,6 +11,7 @@ public:
     EmptyTag(string name, vector<Atts *> atts);
 
     void print();
+    const vector<Item*> getChildren() const;
 };
 
 #endif

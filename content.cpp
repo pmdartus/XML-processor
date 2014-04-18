@@ -10,3 +10,9 @@ void Content::print()
 {
     cout << getText()<<endl;
 }
+
+const vector<Item*> Content::getChildren() const
+{
+    vector<Item*> ret;
+    return ret;
+}

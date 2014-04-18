@@ -9,3 +9,9 @@ void Pi::print()
 {
     cout << "<?" << name << " " << attsToString() << "?>" << endl;
 }
+
+const vector<Item*> Pi::getChildren() const
+{
+    vector<Item*> ret;
+    return ret;
+}
