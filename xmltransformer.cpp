@@ -43,7 +43,6 @@ void XMLTransformer::recusTemplating(const Item* htmlTag, const Item* xmlTag) co
     currentHtmlElement->print();
 
     cout<<endl;
-    cout<<endl;
 
 
     if (currentHtmlElement->getName().compare("xsl:value-of") == 0)
@@ -70,6 +69,8 @@ void XMLTransformer::recusTemplating(const Item* htmlTag, const Item* xmlTag) co
             Item* selectedChild;
             vector<Item*> childrens = xmlTag->getChildren();
 
+            cout<<">>>>>>apply a template selected " << select <<endl;
+
             for(vector<Item *>::iterator it = childrens.begin(); it != childrens.end(); ++it) {
                 Element* childTotemplate = (Element*) (*it);
                 string childName = childTotemplate->getName();
@@ -84,18 +85,20 @@ void XMLTransformer::recusTemplating(const Item* htmlTag, const Item* xmlTag) co
                 recusTemplating((*it), selectedChild);
             }
         }
+        else
+        {
+            // If it's a simple template
+            vector<Item*> childrens = xmlTag->getChildren();
+            for(vector<Item *>::iterator it = childrens.begin(); it != childrens.end(); ++it) {
+                Element* selectedChild = (Element*) (*it);
+                string templateToFind = selectedChild->getName();
 
-        // If it's a simple template
-        vector<Item*> childrens = xmlTag->getChildren();
-        for(vector<Item *>::iterator it = childrens.begin(); it != childrens.end(); ++it) {
-            Element* selectedChild = (Element*) (*it);
-            string templateToFind = selectedChild->getName();
+                cout<<">>>>>>apply a template " << templateToFind <<endl;
 
-            cout<<"apply a template " << templateToFind <<endl;
-
-            vector<Item *> associatedTemplate = XMLTransformer::templates.at(templateToFind);
-            for(vector<Item *>::iterator it = associatedTemplate.begin(); it != associatedTemplate.end(); ++it) {
-                recusTemplating((*it), selectedChild);
+                vector<Item *> associatedTemplate = XMLTransformer::templates.at(templateToFind);
+                for(vector<Item *>::iterator it = associatedTemplate.begin(); it != associatedTemplate.end(); ++it) {
+                    recusTemplating((*it), selectedChild);
+                }
             }
         }
     }
