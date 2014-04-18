@@ -63,14 +63,14 @@ int xmlParse(char* filename, Document** doc)
     Doctypedecl *doctype = 0;
     int retStatus = xmlparse(doc, &doctype);
 
-    if (doc != 0)
+    if (doc != 0 && retStatus == 0)
     {
         if (doctype != 0)
         {
             (*doc)->setDoctypedecl(doctype);
         }
 
-        return 1;
+        return 0;
     }
     else
     {
@@ -95,7 +95,7 @@ int xmlValidate(char* xmlFileName, char* xsdFileName)
     Document *xsd = 0;
     int parseXsd = xmlParse(xsdFileName, &xsd);
     Xmlvalidator* xval = new Xmlvalidator();
-    if (parseXsd)
+    if (parseXsd == 0)
     {
         xval->mapsCreate(xsd);
     }
@@ -103,7 +103,7 @@ int xmlValidate(char* xmlFileName, char* xsdFileName)
     Document *xml = 0;
     int parseXml = xmlParse(xmlFileName, &xml);
     int validation;
-    if (parseXml)
+    if (parseXml == 0)
     {
         validation = xval->validityCheck(xml);
 
@@ -132,8 +132,11 @@ int main(int argc, char* argv[])
             char *fileName = argv[2];
             Document *doc = 0;
             int parse = xmlParse(fileName, &doc);
-            doc->print();
-            return 0;
+            if (parse == 0)
+            {
+                doc->print();
+                return 0;
+            }
         }
     }
     else if (cmdOptionExists(argv, argv+argc, "-t"))
