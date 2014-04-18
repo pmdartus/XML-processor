@@ -1,6 +1,7 @@
 #include "commun.h"
 #include "document.h"
 #include "doctypedecl.h"
+#include "xmlvalidator.h"
 
 #include <unistd.h>
 #include <iostream>
@@ -56,23 +57,20 @@ void checkFileExistence(char* filename)
 /**
  * Parse and display the passed document
  */
-int xmlParse(char* filename)
+int xmlParse(char* filename, Document** doc)
 {
     checkFileExistence(filename);
-    Document *doc = 0;
     Doctypedecl *doctype = 0;
-    int retStatus = xmlparse(&doc, &doctype);
+    int retStatus = xmlparse(doc, &doctype);
 
     if (doc != 0)
     {
         if (doctype != 0)
         {
-            doc->setDoctypedecl(doctype);
+            (*doc)->setDoctypedecl(doctype);
         }
 
-        doc->print();
-
-        return 0;
+        return 1;
     }
     else
     {
@@ -91,10 +89,33 @@ int xmlTransform(char* xmlFileName, char* xslFileName)
 
 int xmlValidate(char* xmlFileName, char* xsdFileName)
 {
-   checkFileExistence(xmlFileName);
-   checkFileExistence(xsdFileName);
+    checkFileExistence(xmlFileName);
+    checkFileExistence(xsdFileName);
 
-   return 1;
+    Document *xsd = 0;
+    int parseXsd = xmlParse(xsdFileName, &xsd);
+    Xmlvalidator* xval = new Xmlvalidator();
+    if (parseXsd)
+    {
+        xval->mapsCreate(xsd);
+    }
+
+    Document *xml = 0;
+    int parseXml = xmlParse(xmlFileName, &xml);
+    int validation;
+    if (parseXml)
+    {
+        validation = xval->validityCheck(xml);
+
+        cout << "The file " << xmlFileName << " is ";
+        if (validation == 0)
+        {
+            cout << "not ";
+        }
+        cout <<  "valid wrt " << xsdFileName << "" << endl;
+    }
+
+    return 0;
 }
 
 int main(int argc, char* argv[])
@@ -109,7 +130,10 @@ int main(int argc, char* argv[])
         else
         {
             char *fileName = argv[2];
-            return xmlParse(fileName);
+            Document *doc = 0;
+            int parse = xmlParse(fileName, &doc);
+            doc->print();
+            return 0;
         }
     }
     else if (cmdOptionExists(argv, argv+argc, "-t"))

@@ -31,3 +31,7 @@ void Tag::print() {
 
         cout << "</" << name << ">"<<endl;
 }
+
+vector<Item*> Tag::getChildren() const {
+    return children;
+}
