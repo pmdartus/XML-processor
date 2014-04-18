@@ -1,4 +1,5 @@
 #include "xmltransformer.h"
+#include "content.h"
 
 XMLTransformer::XMLTransformer(Document* xmlDoc, Document* xslSheet)
 {
@@ -39,14 +40,64 @@ void XMLTransformer::recusTemplating(const Item* htmlTag, const Item* xmlTag) co
 {
     Element* currentHtmlElement = (Element*)htmlTag;
 
+    currentHtmlElement->print();
+
+    cout<<endl;
+    cout<<endl;
+
 
     if (currentHtmlElement->getName().compare("xsl:value-of") == 0)
     {
-        cout<<"add info"<<endl;
+        vector<Item*> childrens = xmlTag->getChildren();
+        Content* contentTag = (Content*) childrens[0];
+
+        cout<<"add info : " <<contentTag->getText()<<endl;
     }
     else if(currentHtmlElement->getName().compare("xsl:apply-templates") == 0)
     {
-        cout<<"apply a template"<<endl;
+        string select;
+        vector<Atts*> atts = currentHtmlElement->getAtts();
+        for(vector<Atts *>::iterator it = atts.begin(); it != atts.end(); ++it) {
+            if ((*it)->name.compare("select") == 0)
+            {
+                select = (*it)->value;
+            }
+        }
+
+        // If there is a select
+        if (select.length())
+        {
+            Item* selectedChild;
+            vector<Item*> childrens = xmlTag->getChildren();
+
+            for(vector<Item *>::iterator it = childrens.begin(); it != childrens.end(); ++it) {
+                Element* childTotemplate = (Element*) (*it);
+                string childName = childTotemplate->getName();
+                if (childName.compare(select) == 0)
+                {
+                    selectedChild = (*it);
+                }
+            }
+
+            vector<Item *> associatedTemplate = XMLTransformer::templates.at(select);
+            for(vector<Item *>::iterator it = associatedTemplate.begin(); it != associatedTemplate.end(); ++it) {
+                recusTemplating((*it), selectedChild);
+            }
+        }
+
+        // If it's a simple template
+        vector<Item*> childrens = xmlTag->getChildren();
+        for(vector<Item *>::iterator it = childrens.begin(); it != childrens.end(); ++it) {
+            Element* selectedChild = (Element*) (*it);
+            string templateToFind = selectedChild->getName();
+
+            cout<<"apply a template " << templateToFind <<endl;
+
+            vector<Item *> associatedTemplate = XMLTransformer::templates.at(templateToFind);
+            for(vector<Item *>::iterator it = associatedTemplate.begin(); it != associatedTemplate.end(); ++it) {
+                recusTemplating((*it), selectedChild);
+            }
+        }
     }
     else
     {
