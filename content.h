@@ -12,8 +12,9 @@ private:
 
 public:
     Content(string text);
-    const string getText() const;
+    virtual ~Content();
 
+    const string getText() const;
     void print();
 };
 

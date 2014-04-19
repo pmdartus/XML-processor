@@ -1,5 +1,8 @@
 #include "item.h"
 
+
+Item::~Item() {}
+
 const Item * Item::getParent() const {
     return Item::parent;
 }

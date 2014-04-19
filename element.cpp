@@ -11,6 +11,7 @@ Element::Element(string name, vector<Atts *> atts) {
 Element::~Element() {
     vector<Atts *>::iterator it = atts.begin();
     while (it != atts.end()) {
+        delete (*it);
         it = atts.erase(it);
     }
 }

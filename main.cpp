@@ -135,8 +135,9 @@ int main(int argc, char* argv[])
             if (parse == 0)
             {
                 doc->print();
-                return 0;
+                delete doc;
             }
+            return 0;
         }
     }
     else if (cmdOptionExists(argv, argv+argc, "-t"))

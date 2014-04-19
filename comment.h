@@ -8,7 +8,6 @@ class Comment : public Content {
 
 public:
     Comment(string text);
-
     void print();
 };
 

@@ -14,7 +14,7 @@ protected:
     vector<Atts*> atts;
 public:
     Element(string name, vector<Atts *> atts);
-    ~Element();
+    virtual ~Element();
 
     const string getName() const;
     vector<Atts*> getAtts() const;

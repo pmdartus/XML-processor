@@ -12,6 +12,7 @@ Tag::Tag(string name, vector<Atts *> atts, vector<Item *> children) :
 Tag::~Tag() {
     vector<Item *>::iterator it = children.begin();
     while (it != children.end()) {
+        delete (*it);
         it = children.erase(it);
     }
 }
