@@ -7,15 +7,17 @@
 class Content : public Item
 {
 
-private:
+protected:
     string text;
 
 public:
     Content(string text);
     virtual ~Content();
-
-    const string getText() const;
+    
     void print();
+    
+    virtual void XSLTransform(Item* xml, map<string, Item*> templates);
+    virtual string textContent() const;
 };
 
 #endif

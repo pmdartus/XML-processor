@@ -15,7 +15,9 @@ Doctypedecl::Doctypedecl(string root_element, string external_id, string dtd_nam
     dtd_name(dtd_name),
     dtd_location(dtd_location) {}
 
-void Doctypedecl::print() {
+
+void Doctypedecl::print()
+{
 	cout << "<!DOCTYPE " << root_element;
 	if (external_id != "")
 	{

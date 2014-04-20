@@ -9,3 +9,14 @@ void Pi::print()
 {
     cout << "<?" << name << " " << attsToString() << "?>" << endl;
 }
+
+
+void Pi::XSLTransform(Item* xml, map<string, Item*> templates)
+{
+    
+}
+
+void Pi::XMLApply(map<string, Item*> templates)
+{
+    
+}

@@ -10,3 +10,8 @@ const Item * Item::getParent() const {
 void Item::setParent(Item *parent) {
     Item::parent = parent;
 }
+
+
+void Item::XMLApply(map<string, Item*> templates) {
+    
+}

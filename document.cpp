@@ -22,7 +22,6 @@ Document::~Document() {
     while (it != misc_element.end()) {
         it = misc_element.erase(it);
     }
-
     delete root;
 }
 
@@ -32,6 +31,15 @@ const Tag * Document::getRoot() const {
 
 void Document::setDoctypedecl(Doctypedecl *doctype) {
     doctypedecl = doctype;
+}
+
+void Document::printPis(vector<Pi *> pis)
+{
+    vector<Pi *>::iterator it = pis.begin();
+    while (it != pis.end()) {
+        (*it)->print();
+        it++;
+    }
 }
 
 void Document::print() {
@@ -48,11 +56,37 @@ void Document::print() {
     printPis(Document::misc_element);
 }
 
-void Document::printPis(vector<Pi *> pis)
+
+
+
+Document* Document::transform(Document* xslSheet)
 {
-    vector<Pi *>::iterator it = pis.begin();
-    while (it != pis.end()) {
-        (*it)->print();
-        it++;
+    map<string, Item*> templates;
+    
+    const Tag* xslRoot = xslSheet->getRoot();
+    vector<Item*> children = xslRoot->getChildren();
+    
+    for(vector<Item*>::iterator it = children.begin(); it != children.end(); ++it) {
+        
+        string pattern;
+        Tag* currentTag = (Tag*) *it;
+        vector<Atts*> atts = currentTag->getAtts();
+        for(vector<Atts *>::iterator it = atts.begin(); it != atts.end(); ++it) {
+            if ((*it)->name.compare("match") == 0)
+            {
+                pattern = (*it)->value;
+            }
+        }
+        
+        templates.insert(pair<string, Item*>(pattern, currentTag));
+        cout << "TEMPLATE" << endl;
+        cout << pattern << ": ";
+        currentTag->print();
+        cout << endl;
     }
+    
+    Item* xslptr = templates.find("/")->second;
+    xslptr->XSLTransform(this->root, templates);
+    
+    return 0;
 }

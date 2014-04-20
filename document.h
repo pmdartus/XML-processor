@@ -17,13 +17,18 @@ private:
     Tag *root;
     vector<Pi *> misc_element;
     Doctypedecl *doctypedecl = 0;
+    
+    void printPis(vector<Pi *> pis);
+    
 public:
     Document(vector<Pi *> misc_prolog, vector<Pi *> misc_doctype, Tag *root, vector<Pi *> misc_element);
     ~Document();
     const Tag * getRoot() const;
     void setDoctypedecl(Doctypedecl *doctype);
     void print();
-    void printPis(vector<Pi *> pis);
+
+    
+    Document* transform(Document* xslSheet);
 };
 
 #endif

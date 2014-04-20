@@ -11,6 +11,9 @@ public:
     EmptyTag(string name, vector<Atts *> atts);
 
     void print();
+    
+    void XSLTransform(Item* xml, map<string, Item*> templates);
+    void XMLApply(map<string, Item*> templates);
 };
 
 #endif

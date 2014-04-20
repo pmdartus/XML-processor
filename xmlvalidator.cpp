@@ -107,7 +107,7 @@ int Xmlvalidator::checkNode(Item* node) {
 				Content* ctNode = dynamic_cast<Content *>(*itCh);
 				if (ctNode)
 				{
-					transfo += ctNode->getText();
+					transfo += ctNode->textContent();
 				}
 
 			}

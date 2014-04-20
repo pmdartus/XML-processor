@@ -6,5 +6,5 @@ Comment::Comment(string text) : Content(text) {
 
 void Comment::print()
 {
-    cout << Content::getText();
+    cout << Content::text;
 }

@@ -24,6 +24,18 @@ vector<Atts*> Element::getAtts() const {
     return atts;
 }
 
+const string Element::getAtt(const string attName) const
+{
+    for (vector<Atts*>::const_iterator it = atts.begin(); it != atts.end(); it++)
+    {
+        if((*it)->name.compare(attName) == 0)
+        {
+            return (*it)->value;
+        }
+    }
+    return "";
+}
+
 string Element::attsToString()
 {
     string ret;
@@ -34,5 +46,11 @@ string Element::attsToString()
     }
 
     return ret.substr(0, ret.size()-1);;
+}
+
+
+string Element::textContent() const
+{
+    return "";
 }
 

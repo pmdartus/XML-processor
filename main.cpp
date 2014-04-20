@@ -79,12 +79,38 @@ int xmlParse(char* filename, Document** doc)
     }
 }
 
-int xmlTransform(char* xmlFileName, char* xslFileName)
+Document* xmlTransform(char* xmlFileName, char* xslFileName)
 {
-   checkFileExistence(xmlFileName);
-   checkFileExistence(xslFileName);
-
-   return 1;
+    // Parse XML
+    checkFileExistence(xmlFileName);
+    
+    Document* xml = 0;
+    Doctypedecl* xmlDoctype = 0;
+    xmlparse(&xml, &xmlDoctype);
+    
+    if (xml != 0 && xmlDoctype != 0)
+    {
+        xml->setDoctypedecl(xmlDoctype);
+    }
+    
+    // Parse XSL
+    checkFileExistence(xslFileName);
+    
+    Document* xsl = 0;
+    Doctypedecl* xslDoctype = 0;
+    xmlparse(&xsl, &xslDoctype);
+    
+    if (xsl != 0 && xslDoctype != 0)
+    {
+        xsl->setDoctypedecl(xslDoctype);
+    }
+    
+    xml->transform(xsl);
+    
+    delete xml;
+    delete xsl;
+    
+    return 0;
 }
 
 int xmlValidate(char* xmlFileName, char* xsdFileName)
@@ -150,7 +176,7 @@ int main(int argc, char* argv[])
         {
             char *xmlFileName = argv[2];
             char *xslFileName = argv[3];
-            return xmlTransform(xmlFileName, xslFileName);
+            Document* doc = xmlTransform(xmlFileName, xslFileName);
         }
 
     }
