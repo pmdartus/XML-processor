@@ -18,3 +18,9 @@ vector<Item*> Item::XMLApply(map<string, Item*> templates)
 {
     return vector<Item*>();
 }
+
+
+vector<Item*> Item::find(string path) const
+{
+    return vector<Item*>();
+}

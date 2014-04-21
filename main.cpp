@@ -106,7 +106,7 @@ Document* xmlTransform(char* xmlFileName, char* xslFileName)
     }
     
     Document* html = xml->transform(xsl);
-    html->print();
+    //mahtml->print();
     
 
     delete xml;

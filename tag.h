@@ -21,6 +21,8 @@ public:
 
     string textContent() const;
     
+    vector<Item*> find(string path) const;
+    
     vector<Item*> XSLTransform(Item* xml, map<string, Item*> templates);
     vector<Item*> XMLApply(map<string, Item*> templates);
 

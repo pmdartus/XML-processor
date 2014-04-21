@@ -66,6 +66,32 @@ string Tag::textContent() const
 }
 
 
+vector<Item*> Tag::find(string path) const
+{
+    std::string current = path.substr(0, path.find("/"));
+    string newPath = path.substr(path.find("/") + 1, path.length());
+    
+    vector<Item*> result;
+    if(current.compare(Element::name) == 0)
+    {
+        if(newPath.compare(current) == 0)
+        {
+            result.push_back((Item*)this);
+        }
+        else
+        {
+            for(vector<Item*>::const_iterator it = children.begin(); it != children.end(); it++)
+            {
+                vector <Item*> elems = (*it)->find(newPath);
+                result.insert(result.end(), elems.begin(), elems.end());
+            }
+        }
+    }
+    return result;
+}
+
+
+
 vector<Item*> Tag::XMLApply(map<string, Item*> templates)
 {
     map<string, Item*>::iterator found = templates.find(Element::name);

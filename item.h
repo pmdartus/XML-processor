@@ -22,6 +22,9 @@ public:
     virtual string textContent() const = 0;
     virtual void print() = 0;
     
+    virtual vector<Item*> find(string path) const;
+    
+    
     virtual vector<Item*> XMLApply(map<string, Item*> templates);
     virtual vector<Item*> XSLTransform(Item* xml, map<string, Item*> templates) = 0;
     
