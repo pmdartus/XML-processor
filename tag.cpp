@@ -11,6 +11,16 @@ Tag::Tag(string name, vector<Atts *> atts, vector<Item *> children) :
         }
 }
 
+Tag::Tag(const Element& elem, vector<Item*> children) :
+    Element(elem),
+    children(children)
+{
+    for(vector<Item*>::iterator it = children.begin(); it != children.end(); it++)
+    {
+        (*it)->setParent(this);
+    }
+}
+
 Tag::~Tag()
 {
     vector<Item *>::iterator it = children.begin();
@@ -56,32 +66,35 @@ string Tag::textContent() const
 }
 
 
-void Tag::XMLApply(map<string, Item*> templates)
+vector<Item*> Tag::XMLApply(map<string, Item*> templates)
 {
-
     map<string, Item*>::iterator found = templates.find(Element::name);
     if(found != templates.end())
     {
         Item* xslptr = found->second;
-        xslptr->XSLTransform(this, templates);
+        return xslptr->XSLTransform(this, templates);
     }
     else
     {
+        vector<Item*> result;
         for(vector<Item*>::iterator it = children.begin(); it != children.end(); it++)
         {
-            (*it)->XMLApply(templates);
+            vector <Item*> html = (*it)->XMLApply(templates);
+            result.insert(result.end(), html.begin(), html.end());
         }
+        return result;
     }
 }
 
-void Tag::XSLTransform(Item* xml, map<string, Item*> templates)
+vector<Item*> Tag::XSLTransform(Item* xml, map<string, Item*> templates)
 {
+    vector<Item*> result;
     if(name.compare("xsl:apply-templates") == 0)
     {
         string value = Element::getAtt("select");
         if (value.empty())
         {
-            xml->XMLApply(templates);
+            return xml->XMLApply(templates);
         }
         else
         {
@@ -89,23 +102,27 @@ void Tag::XSLTransform(Item* xml, map<string, Item*> templates)
             map<string, Item*>::iterator it = templates.find(value);
             temp.insert((*it));
             
-            xml->XMLApply(temp);
+            return xml->XMLApply(temp);
         }
     }
     else if(name.compare("xsl:value-of") == 0)
     {
         //TODO : Handle a path instead of just .
-        cout << xml->textContent() << endl;
+        result.push_back(new Content(xml->textContent()));
     }
     else
     {
+        vector<Item*> tagChildren;
         for(vector<Item*>::iterator it = children.begin(); it != children.end(); it++)
         {
-            (*it)->XSLTransform(xml, templates);
-            if(name.compare("xsl:template") != 0)
-            {
-                cout << "Transformed: " << Element::name << endl;
-            }
+            vector<Item*> html = (*it)->XSLTransform(xml, templates);
+            tagChildren.insert(tagChildren.end(), html.begin(), html.end());
+        }
+        result.push_back(new Tag(*this, tagChildren));
+        if(name.compare("xsl:template") == 0)
+        {
+            return tagChildren;
         }
     }
+    return result;
 }

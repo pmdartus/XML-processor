@@ -3,12 +3,14 @@
 
 #include "commun.h"
 
-struct Atts {
+struct Atts
+{
     
     string name;
     string value;
     
     Atts(string name, string value);
+    Atts(const Atts& att);
 };
 
 #endif

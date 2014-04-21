@@ -105,10 +105,13 @@ Document* xmlTransform(char* xmlFileName, char* xslFileName)
         xsl->setDoctypedecl(xslDoctype);
     }
     
-    xml->transform(xsl);
+    Document* html = xml->transform(xsl);
+    html->print();
     
+
     delete xml;
     delete xsl;
+    delete html;
     
     return 0;
 }

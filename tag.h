@@ -3,8 +3,8 @@
 
 #include "element.h"
 #include "item.h"
+#include "content.h"
 #include "commun.h"
-#include <vector>
 
 class Tag : public Element
 {
@@ -14,14 +14,15 @@ private:
     
 public:
     Tag(string name, vector<Atts*> atts, vector<Item*> children);
+    Tag(const Element& elem, vector<Item*> children);
     ~Tag();
     void print();
     vector<Item*> getChildren() const;
 
     string textContent() const;
     
-    void XSLTransform(Item* xml, map<string, Item*> templates);
-    void XMLApply(map<string, Item*> templates);
+    vector<Item*> XSLTransform(Item* xml, map<string, Item*> templates);
+    vector<Item*> XMLApply(map<string, Item*> templates);
 
 };
 

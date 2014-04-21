@@ -5,6 +5,7 @@
 #include "atts.h"
 #include "commun.h"
 #include <vector>
+#include <map>
 
 class Element : public Item
 {
@@ -14,6 +15,7 @@ protected:
     vector<Atts*> atts;
 public:
     Element(string name, vector<Atts *> atts);
+    Element(const Element& elem);
     virtual ~Element();
 
     const string getName() const;
@@ -25,8 +27,8 @@ public:
     virtual void print() = 0;
     virtual string textContent() const;
     
-    virtual void XSLTransform(Item* xml, map<string, Item*> templates) = 0;
-    virtual void XMLApply(map<string, Item*> templates) = 0;
+    virtual vector<Item*> XSLTransform(Item* xml, map<string, Item*> templates) = 0;
+    virtual vector<Item*> XMLApply(map<string, Item*> templates);
 };
 
 #endif

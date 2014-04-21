@@ -2,10 +2,21 @@
 #include <iostream>
 #include <string>
 
-Element::Element(string name, vector<Atts *> atts) {
+Element::Element(string name, vector<Atts *> atts) : Item()
+{
     Element::name = name;
     Element::atts = atts;
     Element::parent = 0;
+}
+
+Element::Element(const Element& elem) : Item()
+{
+    name = elem.name;
+    vector<Atts*>::const_iterator it = elem.atts.begin();
+    for (; it != elem.atts.end(); it++)
+    {
+        atts.push_back(new Atts(**it));
+    }
 }
 
 Element::~Element() {
@@ -54,3 +65,7 @@ string Element::textContent() const
     return "";
 }
 
+vector<Item*> Element::XMLApply(map<string, Item*> templates)
+{
+    return vector<Item*>();
+}

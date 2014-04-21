@@ -4,44 +4,44 @@ EmptyTag::EmptyTag(string name, vector<Atts *> atts) : Element(name, atts)
 {
 }
 
+EmptyTag::EmptyTag(const Element& elem) : Element(elem)
+{
+    
+}
+
 void EmptyTag::print()
 {
     cout << "<" << name << Element::attsToString() << "/>" << endl;
 }
 
 
-
-void EmptyTag::XSLTransform(Item* xml, map<string, Item*> templates)
+vector<Item*> EmptyTag::XSLTransform(Item* xml, map<string, Item*> templates)
 {
+    vector<Item*> result;
     if(name.compare("xsl:apply-templates") == 0)
     {
         string value = Element::getAtt("select");
         if (value.empty())
         {
-            xml->XMLApply(templates);
+            return xml->XMLApply(templates);
         }
         else
         {
             map<string, Item*> temp;
             map<string, Item*>::iterator it = templates.find(value);
             temp.insert((*it));
-
-            xml->XMLApply(temp);
+            
+            return xml->XMLApply(temp);
         }
     }
     else if(name.compare("xsl:value-of") == 0)
     {
         //TODO : Handle a path instead of just .
-        cout << xml->textContent() << endl;
+        result.push_back(new Content(xml->textContent()));
     }
     else
     {
-        cout << Element::name << endl;
+        result.push_back(new EmptyTag(*this));
     }
-}
-
-
-void EmptyTag::XMLApply(map<string, Item*> templates)
-{
-    
+    return result;
 }

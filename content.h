@@ -15,9 +15,9 @@ public:
     virtual ~Content();
     
     void print();
-    
-    virtual void XSLTransform(Item* xml, map<string, Item*> templates);
     virtual string textContent() const;
+    
+    virtual vector<Item*> XSLTransform(Item* xml, map<string, Item*> templates);
 };
 
 #endif

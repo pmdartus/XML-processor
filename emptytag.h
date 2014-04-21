@@ -2,6 +2,7 @@
 #define EMPTYTAG_H
 
 #include "element.h"
+#include "content.h"
 #include "commun.h"
 
 class EmptyTag : public Element {
@@ -9,11 +10,10 @@ class EmptyTag : public Element {
 private:
 public:
     EmptyTag(string name, vector<Atts *> atts);
-
+    EmptyTag(const Element& elem);
     void print();
     
-    void XSLTransform(Item* xml, map<string, Item*> templates);
-    void XMLApply(map<string, Item*> templates);
+    vector<Item*> XSLTransform(Item* xml, map<string, Item*> templates);
 };
 
 #endif

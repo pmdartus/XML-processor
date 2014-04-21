@@ -22,6 +22,7 @@ private:
     
 public:
     Document(vector<Pi *> misc_prolog, vector<Pi *> misc_doctype, Tag *root, vector<Pi *> misc_element);
+    Document(Tag* root);
     ~Document();
     const Tag * getRoot() const;
     void setDoctypedecl(Doctypedecl *doctype);

@@ -13,8 +13,7 @@ public:
 
     void print();
     
-    void XSLTransform(Item* xml, map<string, Item*> templates);
-    void XMLApply(map<string, Item*> templates);
+    vector<Item*> XSLTransform(Item* xml, map<string, Item*> templates);
 };
 
 #endif

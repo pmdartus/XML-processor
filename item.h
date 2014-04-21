@@ -2,7 +2,9 @@
 #define ITEM_H
 
 #include "commun.h"
+#include <vector>
 #include <map>
+
 class tag;
 
 class Item
@@ -20,8 +22,8 @@ public:
     virtual string textContent() const = 0;
     virtual void print() = 0;
     
-    virtual void XMLApply(map<string, Item*> templates);
-    virtual void XSLTransform(Item* xml, map<string, Item*> templates) = 0;
+    virtual vector<Item*> XMLApply(map<string, Item*> templates);
+    virtual vector<Item*> XSLTransform(Item* xml, map<string, Item*> templates) = 0;
     
 };
 

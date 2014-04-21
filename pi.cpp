@@ -11,12 +11,7 @@ void Pi::print()
 }
 
 
-void Pi::XSLTransform(Item* xml, map<string, Item*> templates)
+vector<Item*> Pi::XSLTransform(Item* xml, map<string, Item*> templates)
 {
-    
-}
-
-void Pi::XMLApply(map<string, Item*> templates)
-{
-    
+    return vector<Item*>();
 }
