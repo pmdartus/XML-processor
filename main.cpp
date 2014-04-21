@@ -83,36 +83,36 @@ Document* xmlTransform(char* xmlFileName, char* xslFileName)
 {
     // Parse XML
     checkFileExistence(xmlFileName);
-    
+
     Document* xml = 0;
     Doctypedecl* xmlDoctype = 0;
     xmlparse(&xml, &xmlDoctype);
-    
+
     if (xml != 0 && xmlDoctype != 0)
     {
         xml->setDoctypedecl(xmlDoctype);
     }
-    
+
     // Parse XSL
     checkFileExistence(xslFileName);
-    
+
     Document* xsl = 0;
     Doctypedecl* xslDoctype = 0;
     xmlparse(&xsl, &xslDoctype);
-    
+
     if (xsl != 0 && xslDoctype != 0)
     {
         xsl->setDoctypedecl(xslDoctype);
     }
-    
+
     Document* html = xml->transform(xsl);
     html->print();
-    
+
 
     delete xml;
     delete xsl;
     delete html;
-    
+
     return 0;
 }
 
@@ -180,6 +180,7 @@ int main(int argc, char* argv[])
             char *xmlFileName = argv[2];
             char *xslFileName = argv[3];
             Document* doc = xmlTransform(xmlFileName, xslFileName);
+            return 0;
         }
 
     }
