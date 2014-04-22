@@ -39,7 +39,6 @@ vector<Item*> EmptyTag::XSLTransform(Item* xml, map<string, Item*> templates)
         
         string value = Element::getAtt("select");
         string content;
-        xml->print();
         if(value.compare(".") == 0)
         {
             content = xml->textContent();

@@ -71,7 +71,6 @@ vector<Item*> Tag::find(string path) const
     string current = path.substr(0, path.find("/"));
     string newPath = path.substr(path.find("/") + 1, path.length());
     
-    cout << current << endl;
     vector<Item*> result;
     if(current.compare(Element::name) == 0 || current.compare(".") == 0)
     {
@@ -146,6 +145,22 @@ vector<Item*> Tag::XSLTransform(Item* xml, map<string, Item*> templates)
             content = item->textContent();
         }
         result.push_back(new Content(content));
+    }
+    else if(name.compare("xsl:for-each") == 0)
+    {
+        string value = Element::getAtt("select");
+        vector<Item*> found = xml->find(value);
+        vector<Item*>::iterator foundIt = found.begin();
+        vector<Item*>::iterator childrenIt = children.begin();
+        
+        for(; childrenIt != children.end(); childrenIt++)
+        {
+            for(; foundIt != found.end(); foundIt++)
+            {
+                vector<Item*> html = (*childrenIt)->XSLTransform((*foundIt), templates);
+                result.insert(result.end(), html.begin(), html.end());
+            }
+        }
     }
     else
     {
