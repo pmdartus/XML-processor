@@ -31,6 +31,9 @@ Document::~Document()
     {
         it = misc_element.erase(it);
     }
+    if(doctypedecl != 0)
+    	delete doctypedecl;
+
     delete root;
 }
 
