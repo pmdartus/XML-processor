@@ -68,11 +68,12 @@ string Tag::textContent() const
 
 vector<Item*> Tag::find(string path) const
 {
-    std::string current = path.substr(0, path.find("/"));
+    string current = path.substr(0, path.find("/"));
     string newPath = path.substr(path.find("/") + 1, path.length());
     
+    cout << current << endl;
     vector<Item*> result;
-    if(current.compare(Element::name) == 0)
+    if(current.compare(Element::name) == 0 || current.compare(".") == 0)
     {
         if(newPath.compare(current) == 0)
         {
@@ -133,8 +134,18 @@ vector<Item*> Tag::XSLTransform(Item* xml, map<string, Item*> templates)
     }
     else if(name.compare("xsl:value-of") == 0)
     {
-        //TODO : Handle a path instead of just .
-        result.push_back(new Content(xml->textContent()));
+        string value = Element::getAtt("select");
+        string content;
+        if(value.compare(".") == 0 || value.compare(Element::name) == 0)
+        {
+            content = xml->textContent();
+        }
+        else
+        {
+            Item* item = *(xml->find("./" + value).begin());
+            content = item->textContent();
+        }
+        result.push_back(new Content(content));
     }
     else
     {

@@ -96,10 +96,5 @@ Document* Document::transform(Document* xslSheet)
     vector<Item*> res = xslptr->XSLTransform(this->root, templates);
     Tag* htmlroot = static_cast<Tag*>(*(res.begin()));
     
-    vector<Item*> test = root->find("catalog/cd");
-    for(vector<Item*>::iterator it = test.begin(); it != test.end(); ++it)
-    {
-          (*it)->print();
-    }
     return new Document(htmlroot);
 }

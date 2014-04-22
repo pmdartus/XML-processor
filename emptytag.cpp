@@ -36,8 +36,20 @@ vector<Item*> EmptyTag::XSLTransform(Item* xml, map<string, Item*> templates)
     }
     else if(name.compare("xsl:value-of") == 0)
     {
-        //TODO : Handle a path instead of just .
-        result.push_back(new Content(xml->textContent()));
+        
+        string value = Element::getAtt("select");
+        string content;
+        xml->print();
+        if(value.compare(".") == 0)
+        {
+            content = xml->textContent();
+        }
+        else
+        {
+            Item* item = *(xml->find("./" + value).begin());
+            content = item->textContent();
+        }
+        result.push_back(new Content(content));
     }
     else
     {
