@@ -79,7 +79,7 @@ int xmlParse(char* filename, Document** doc)
     }
 }
 
-Document* xmlTransform(char* xmlFileName, char* xslFileName)
+int xmlTransform(char* xmlFileName, char* xslFileName)
 {
     // Parse XML
     checkFileExistence(xmlFileName);
@@ -106,9 +106,9 @@ Document* xmlTransform(char* xmlFileName, char* xslFileName)
     }
     
     Document* html = xml->transform(xsl);
+    
     html->print();
     
-
     delete xml;
     delete xsl;
     delete html;
@@ -180,7 +180,7 @@ int main(int argc, char* argv[])
         {
             char *xmlFileName = argv[2];
             char *xslFileName = argv[3];
-            Document* doc = xmlTransform(xmlFileName, xslFileName);
+            return xmlTransform(xmlFileName, xslFileName);
         }
 
     }
